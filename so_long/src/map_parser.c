@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 09:19:57 by sheiles           #+#    #+#             */
-/*   Updated: 2025/01/24 16:27:38 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/02/07 09:04:17 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	is_surrounded_by_walls(char **map)
 	height = 0;
 	while (map[height])
 		height++;
-
 	// Check top border
 	x = 0;
 	while (x < width)
@@ -51,7 +50,6 @@ static int	is_surrounded_by_walls(char **map)
 			return (0);
 		x++;
 	}
-
 	// Check bottom border
 	x = 0;
 	while (x < width)
@@ -60,7 +58,6 @@ static int	is_surrounded_by_walls(char **map)
 			return (0);
 		x++;
 	}
-
 	// Check left and right borders
 	y = 0;
 	while (y < height)
@@ -69,10 +66,8 @@ static int	is_surrounded_by_walls(char **map)
 			return (0);
 		y++;
 	}
-
 	return (1);
 }
-
 
 // Read the map file and split into 2D array
 static char	**read_map(const char *file)

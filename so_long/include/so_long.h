@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:56:56 by sheiles           #+#    #+#             */
-/*   Updated: 2025/01/24 16:38:14 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/02/11 11:05:14 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define KEY_S      115
 # define KEY_D      100
 # define KEY_ESC  65307
+
+# define XPM_WALL         "./textures/wall.xpm"
 
 // Tile Size
 # define TILE_SIZE   64
