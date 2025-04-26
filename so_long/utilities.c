@@ -1,25 +1,29 @@
 #include "so_long.h"
 
-size_t sl_strlen(const char *s)
+size_t	sl_strlen(const char *s)
 {
-	size_t i = 0;
+	size_t	i;
+
+	i = 0;
 	while (s && s[i])
 		i++;
 	return (i);
 }
 
-void sl_putstr_fd(char *s, int fd)
+void	sl_putstr_fd(char *s, int fd)
 {
 	if (!s)
-		return;
+		return ;
 	write(fd, s, sl_strlen(s));
 }
 
-static int word_count(const char *s, char c)
+int	word_count(const char *s, char c)
 {
-	int count = 0;
-	int i = 0;
+	int	count;
+	int	i;
 
+	count = 0;
+	i = 0;
 	while (s[i])
 	{
 		while (s[i] && s[i] == c)
@@ -34,11 +38,11 @@ static int word_count(const char *s, char c)
 	return (count);
 }
 
-char **sl_split(char const *s, char c)
+char	**sl_split(char const *s, char c)
 {
 	char	**tab;
-	int		start, end, i = 0;
 
+	int start, i = 0;
 	if (!s)
 		return (NULL);
 	tab = malloc(sizeof(char *) * (word_count(s, c) + 1));

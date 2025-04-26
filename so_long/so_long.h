@@ -8,15 +8,15 @@
 # include <stdio.h>
 # include <string.h>
 # include <sys/time.h>
-# include "mlx.h"
+# include "mlx/mlx.h"
 
-# define TILE_SIZE 64
+# define TILE_SIZE 24
 
-# define KEY_W 13
-# define KEY_A 0
-# define KEY_S 1
-# define KEY_D 2
-# define KEY_ESC 53
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_ESC 65307
 
 # define WALL '1'
 # define FLOOR '0'
@@ -70,14 +70,13 @@ int		error(char *msg);
 void	game_init(t_game *game, char *mapfile);
 
 /* map_checker.c */
-int		is_valid_tile(char c);
-int		check_walls(t_game *game, int i, int j);
-int		check_line(t_game *game, int *players, int *exits, int *keys);
 int		is_valid_map(t_game *game);
 
 /* map.c */
 char	*read_file(char *filename);
 int		load_map(t_game *game, char *filename);
+void	free_map(t_game *game);
+
 
 /* path_check.c */
 int		check_valid_path(t_game *game);

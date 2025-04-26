@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_checker.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/26 18:32:21 by sheiles           #+#    #+#             */
+/*   Updated: 2025/04/26 20:19:04 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
 
 static int	is_valid_tile(char c)
 {
@@ -27,6 +40,7 @@ static int	check_line(t_game *game, int i, int *players, int *exits, int *keys)
 		{
 			game->player_x = j;
 			game->player_y = i;
+			game->map[i][j] = FLOOR; // Remplacer P par 0
 		}
 		else if (game->map[i][j] == EXIT)
 			(*exits)++;
@@ -38,6 +52,7 @@ static int	check_line(t_game *game, int i, int *players, int *exits, int *keys)
 	}
 	return (1);
 }
+
 
 int	is_valid_map(t_game *game)
 {

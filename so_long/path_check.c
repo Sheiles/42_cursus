@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_check.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/26 18:32:58 by sheiles           #+#    #+#             */
+/*   Updated: 2025/04/26 18:45:36 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-static void	flood_fill(char **map, int x, int y)
+void	flood_fill(char **map, int x, int y)
 {
 	if (map[y][x] == WALL || map[y][x] == 'X')
 		return;
@@ -11,7 +23,7 @@ static void	flood_fill(char **map, int x, int y)
 	flood_fill(map, x, y - 1);
 }
 
-static char	**copy_map(char **map, int height)
+char	**copy_map(char **map, int height)
 {
 	int		i;
 	char	**copy;

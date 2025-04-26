@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/26 18:32:54 by sheiles           #+#    #+#             */
+/*   Updated: 2025/04/26 18:32:56 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "so_long.h"
 
@@ -12,24 +24,7 @@ void	free_map(t_game *game)
 	free(game->map);
 }
 
-static int	count_lines(char *filename)
-{
-	int	fd;
-	int	count;
-	char	c;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		error("Cannot open file");
-	count = 0;
-	while (read(fd, &c, 1) > 0)
-		if (c == '\n')
-			count++;
-	close(fd);
-	return (count + 1);
-}
-
-static char	*read_file(char *filename)
+char	*read_file(char *filename)
 {
 	int		fd;
 	int		ret;

@@ -1,31 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/26 18:32:30 by sheiles           #+#    #+#             */
+/*   Updated: 2025/04/26 19:29:27 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "so_long.h"
 
-static void move_player(t_game *game, int new_x, int new_y)
+
+
+void move_player(t_game *game, int new_x, int new_y)
 {
-	if (game->map[new_y][new_x] == WALL)
-		return;
-	if (game->map[new_y][new_x] == KEY)
-		game->keys--;
-if (game->map[new_y][new_x] == EXIT)
-{
-	if (game->keys == 0)
-	{
-		printf("GG, tu as gagné !\n");
-		handle_exit(game);
-	}
-	else
-		return;
+    char next_tile;
+
+    next_tile = game->map[new_y][new_x];
+    if (next_tile == WALL)
+        return;
+    if (next_tile == KEY)
+        game->keys--;
+    if (next_tile == EXIT)
+    {
+        if (game->keys == 0)
+        {
+            printf("GG, tu as gagné !\n");
+            handle_exit(game);
+        }
+        else
+            return;
+    }
+    game->map[game->player_y][game->player_x] = FLOOR;
+    game->player_x = new_x;
+    game->player_y = new_y;
+    game->map[game->player_y][game->player_x] = PLAYER;
+    game->moves++;
+    printf("Moves: %d\n", game->moves);
+    render_map(game);
 }
 
-	game->map[game->player_y][game->player_x] = FLOOR;
-	game->player_x = new_x;
-	game->player_y = new_y;
-	game->map[game->player_y][game->player_x] = PLAYER;
-	game->moves++;
-	printf("Moves: %d\n", game->moves);
-	render_map(game);
-}
+
 
 int handle_key(int keycode, t_game *game)
 {

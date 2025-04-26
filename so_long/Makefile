@@ -3,25 +3,29 @@ NAME = so_long
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLX = -lmlx -framework OpenGL -framework AppKit
+MLX_DIR = mlx
+MLX_FLAGS = -L/usr/include -lXext -lX11 -lm
+MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRC = main.c \
-	  event.c \
+	  events.c \
 	  exit.c \
 	  free_split.c \
-	  load_image.c \
+	  load_images.c \
 	  map.c \
 	  map_checker.c \
 	  path_check.c \
 	  render.c \
-	  utilities.c
+	  utilities.c\
+	  render_utils.c \
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(MLX) -o $(NAME)
+	$(MAKE) -C $(MLX_DIR)
+	$(CC) $(CFLAGS) $(OBJ) $(MLX_LIB) $(MLX_FLAGS) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
