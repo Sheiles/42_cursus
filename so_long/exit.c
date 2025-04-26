@@ -7,13 +7,20 @@ void destroy_images(t_game *game)
 		mlx_destroy_image(game->mlx, game->img.wall);
 	if (game->img.floor)
 		mlx_destroy_image(game->mlx, game->img.floor);
-	if (game->img.key)
-		mlx_destroy_image(game->mlx, game->img.key);
-	if (game->img.exit)
-		mlx_destroy_image(game->mlx, game->img.exit);
-	if (game->img.player)
-		mlx_destroy_image(game->mlx, game->img.player);
+	if (game->img.key[0])
+		mlx_destroy_image(game->mlx, game->img.key[0]);
+	if (game->img.key[1])
+		mlx_destroy_image(game->mlx, game->img.key[1]);
+	if (game->img.exit[0])
+		mlx_destroy_image(game->mlx, game->img.exit[0]);
+	if (game->img.exit[1])
+		mlx_destroy_image(game->mlx, game->img.exit[1]);
+	if (game->img.player_left)
+		mlx_destroy_image(game->mlx, game->img.player_left);
+	if (game->img.player_right)
+		mlx_destroy_image(game->mlx, game->img.player_right);
 }
+
 int handle_exit(t_game *game)
 {
 	struct timeval end_time;
@@ -30,4 +37,3 @@ int handle_exit(t_game *game)
 	exit(0);
 	return (0);
 }
-
