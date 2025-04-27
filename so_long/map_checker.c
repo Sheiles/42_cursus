@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:32:21 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/26 20:19:04 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/27 16:11:54 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	check_walls(t_game *game, int i, int j)
 	return (1);
 }
 
-static int	check_line(t_game *game, int i, int *players, int *exits, int *keys)
+static int	check_line(t_game *game, int i, t_count *count)
 {
 	int	j;
 
@@ -36,16 +36,17 @@ static int	check_line(t_game *game, int i, int *players, int *exits, int *keys)
 	{
 		if (!check_walls(game, i, j))
 			return (0);
-		if (game->map[i][j] == PLAYER && ++(*players))
+		if (game->map[i][j] == PLAYER)
 		{
+			count->players++;
 			game->player_x = j;
 			game->player_y = i;
-			game->map[i][j] = FLOOR; // Remplacer P par 0
+			game->map[i][j] = FLOOR;
 		}
 		else if (game->map[i][j] == EXIT)
-			(*exits)++;
+			count->exits++;
 		else if (game->map[i][j] == KEY)
-			(*keys)++;
+			count->keys++;
 		else if (!is_valid_tile(game->map[i][j]))
 			return (0);
 		j++;
@@ -53,25 +54,22 @@ static int	check_line(t_game *game, int i, int *players, int *exits, int *keys)
 	return (1);
 }
 
-
 int	is_valid_map(t_game *game)
 {
-	int	i;
-	int	exits;
-	int	players;
-	int	keys;
+	int		i;
+	t_count	count;
 
 	i = 0;
-	exits = 0;
-	players = 0;
-	keys = 0;
+	count.players = 0;
+	count.exits = 0;
+	count.keys = 0;
 	while (i < game->height)
 	{
 		if ((int)sl_strlen(game->map[i]) != game->width)
 			return (0);
-		if (!check_line(game, i, &players, &exits, &keys))
+		if (!check_line(game, i, &count))
 			return (0);
 		i++;
 	}
-	return (players == 1 && exits == 1 && keys >= 1);
+	return (count.players == 1 && count.exits == 1 && count.keys >= 1);
 }

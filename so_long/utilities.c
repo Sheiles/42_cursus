@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utilities.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 14:12:28 by sheiles           #+#    #+#             */
+/*   Updated: 2025/04/27 14:20:34 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 size_t	sl_strlen(const char *s)
@@ -38,11 +50,23 @@ int	word_count(const char *s, char c)
 	return (count);
 }
 
+static int	word_len(const char *s, char c)
+{
+	int	len;
+
+	len = 0;
+	while (s[len] && s[len] != c)
+		len++;
+	return (len);
+}
+
 char	**sl_split(char const *s, char c)
 {
 	char	**tab;
+	int		i;
+	int		len;
 
-	int start, i = 0;
+	i = 0;
 	if (!s)
 		return (NULL);
 	tab = malloc(sizeof(char *) * (word_count(s, c) + 1));
@@ -52,15 +76,13 @@ char	**sl_split(char const *s, char c)
 	{
 		while (*s == c && *s)
 			s++;
-		start = 0;
-		while (s[start] && s[start] != c)
-			start++;
-		if (start)
+		len = word_len(s, c);
+		if (len)
 		{
-			tab[i] = strndup(s, start);
+			tab[i] = strndup(s, len);
 			if (!tab[i++])
 				return (NULL);
-			s += start;
+			s += len;
 		}
 	}
 	tab[i] = NULL;

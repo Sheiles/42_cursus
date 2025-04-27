@@ -1,0 +1,2 @@
+Total moves: 0
+Total time: 1 seconds
