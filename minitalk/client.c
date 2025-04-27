@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 12:11:05 by sheiles           #+#    #+#             */
-/*   Updated: 2025/01/08 09:35:30 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/27 22:22:04 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	send_bit(pid_t server_pid, int bit)
 	{
 		if (kill(server_pid, SIGUSR2) == -1)
 		{
-			perror("Error sending signal");
+			ft_printf("Error sending signal");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -36,7 +36,7 @@ void	send_bit(pid_t server_pid, int bit)
 	{
 		if (kill(server_pid, SIGUSR1) == -1)
 		{
-			perror("Error sending signal");
+			ft_printf("Error sending signal");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -59,23 +59,23 @@ void	send_char(pid_t server_pid, char c)
 
 int	main(int argc, char **argv)
 {
-	pid_t	server_pid;
-	char	*message;
-	size_t	i;
+	pid_t				server_pid;
+	char				*message;
+	size_t				i;
 	struct sigaction	sa;
 
 	sa.sa_handler = handle_ack;
 	sa.sa_flags = SA_RESTART;
 	if (argc != 3)
 	{
-		fprintf(stderr, "Usage: %s <server_pid> <message>\n", argv[0]);
+		ft_printf("Usage: %s <server_pid> <message>\n", argv[0]);
 		return (1);
 	}
 	sigaction(SIGUSR1, &sa, NULL);
-	server_pid = atoi(argv[1]);
+	server_pid = ft_atoi(argv[1]);
 	message = argv[2];
 	i = 0;
-	while (i < strlen(message))
+	while (i < ft_strlen(message))
 	{
 		send_char(server_pid, message[i]);
 		i++;
