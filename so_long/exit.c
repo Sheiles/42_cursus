@@ -6,14 +6,14 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:32:34 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/26 18:32:36 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/27 21:14:22 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <sys/time.h>
 
-void destroy_images(t_game *game)
+void	destroy_images(t_game *game)
 {
 	if (game->img.wall)
 		mlx_destroy_image(game->mlx, game->img.wall);
@@ -33,19 +33,15 @@ void destroy_images(t_game *game)
 		mlx_destroy_image(game->mlx, game->img.player_right);
 }
 
-int handle_exit(t_game *game)
+int	handle_exit(t_game *game)
 {
-	struct timeval end_time;
-	long elapsed_sec;
-
-	gettimeofday(&end_time, NULL);
-	elapsed_sec = end_time.tv_sec - game->start_time.tv_sec;
-
-	printf("Total moves: %d\n", game->moves);
-	printf("Total time: %ld seconds\n", elapsed_sec);
-
+	ft_printf("Total moves: %d\n", game->moves);
 	destroy_images(game);
 	free_map(game);
+	mlx_clear_window(game->mlx, game->win);
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
 	exit(0);
 	return (0);
 }

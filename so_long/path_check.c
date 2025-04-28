@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:32:58 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/26 18:45:36 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/27 14:06:37 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	flood_fill(char **map, int x, int y)
 {
 	if (map[y][x] == WALL || map[y][x] == 'X')
-		return;
+		return ;
 	map[y][x] = 'X';
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x - 1, y);
@@ -44,9 +44,11 @@ char	**copy_map(char **map, int height)
 int	check_valid_path(t_game *game)
 {
 	char	**tmp;
-	int		i, j;
-	int		valid = 1;
+	int		i;
+	int		j;
+	int		valid;
 
+	valid = 1;
 	tmp = copy_map(game->map, game->height);
 	if (!tmp)
 		return (0);

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/27 14:09:45 by sheiles           #+#    #+#             */
+/*   Updated: 2025/04/27 16:12:07 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
@@ -36,20 +47,27 @@ typedef struct s_img
 
 typedef struct s_game
 {
-	void	*mlx;
-	void	*win;
-	char	**map;
-	int		width;
-	int		height;
-	int		player_x;
-	int		player_y;
-	int		keys;
-	int		moves;
-	int		frame;
-	char	last_dir;
+	void			*mlx;
+	void			*win;
+	char			**map;
+	int				width;
+	int				height;
+	int				player_x;
+	int				player_y;
+	int				keys;
+	int				moves;
+	int				frame;
+	char			last_dir;
 	struct timeval	start_time;
-	t_img	img;
+	t_img			img;
 }	t_game;
+
+typedef struct s_count
+{
+	int	players;
+	int	exits;
+	int	keys;
+}	t_count;
 
 /* event.c */
 void	move_player(t_game *game, int new_x, int new_y);
@@ -77,7 +95,6 @@ char	*read_file(char *filename);
 int		load_map(t_game *game, char *filename);
 void	free_map(t_game *game);
 
-
 /* path_check.c */
 int		check_valid_path(t_game *game);
 char	**copy_map(char **map, int height);
@@ -97,4 +114,3 @@ int		word_count(const char *s, char c);
 char	**sl_split(char const *s, char c);
 
 #endif
-

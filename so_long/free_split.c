@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:32:40 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/26 18:32:41 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/27 14:32:09 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	free_split(char **split)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	if (!split)
-		return;
+		return ;
 	while (split[i])
 		free(split[i++]);
 	free(split);
