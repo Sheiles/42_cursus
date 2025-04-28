@@ -1,25 +1,41 @@
 
 NAME = push_swap
-CC = gcc
+
+SRC_DIR = src
+INC_DIR = includes
+
+SRC = \
+	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/init_stack.c \
+	$(SRC_DIR)/errors.c \
+	$(SRC_DIR)/free.c \
+	$(SRC_DIR)/sort_small.c \
+	$(SRC_DIR)/sort_radix.c \
+	$(SRC_DIR)/ops_swap.c \
+	$(SRC_DIR)/ops_push.c \
+	$(SRC_DIR)/ops_rotate.c \
+	$(SRC_DIR)/ops_reverse_rotate.c \
+	$(SRC_DIR)/utils_stack.c \
+	$(SRC_DIR)/utils_convert.c \
+	$(SRC_DIR)/utils_split.c
+
+OBJ = $(SRC:.c=.o)
+
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = push_swap.c stack_utils.c
-OBJS = $(SRCS:.c=.o)
 RM = rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -I$(INC_DIR) -o $(NAME) $(OBJ)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re	
+.PHONY: all clean fclean re
