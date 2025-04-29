@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:32:58 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/27 14:06:37 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/29 19:40:45 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**copy_map(char **map, int height)
 	i = 0;
 	while (i < height)
 	{
-		copy[i] = strdup(map[i]);
+		copy[i] = ft_strdup(map[i]);
 		i++;
 	}
 	copy[i] = NULL;

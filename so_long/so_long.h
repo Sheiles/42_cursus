@@ -6,20 +6,17 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:09:45 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/27 16:12:07 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/29 19:51:02 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdlib.h>
-# include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
-# include <sys/time.h>
+# include "ft_printf/ft_printf.h"
 # include "mlx/mlx.h"
+# include "libft/libft.h"
 
 # define TILE_SIZE 24
 
