@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 15:46:58 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/27 22:22:58 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/29 21:05:59 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int	main(void)
 {
 	struct sigaction	sa;
 
-	ft_printf("Server PID: %d\n", getpid());
-	sa.sa_flags = SA_SIGINFO;
+	printf("Server PID: %d\n", getpid());
 	sa.sa_sigaction = signal_handler;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);

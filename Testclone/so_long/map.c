@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:32:54 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/27 21:12:37 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/29 19:38:02 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*read_file(char *filename)
 	if (ret <= 0)
 		error("Cannot read file");
 	buff[ret] = '\0';
-	content = strdup(buff);
+	content = ft_strdup(buff);
 	close(fd);
 	return (content);
 }

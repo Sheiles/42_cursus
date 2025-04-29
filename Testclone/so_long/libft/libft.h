@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:32:05 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/29 23:42:09 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/29 19:47:11 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 
 char	*ft_strndup(const char *s, size_t n);
+
 
 #endif

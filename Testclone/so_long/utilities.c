@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 14:12:28 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/27 14:20:34 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/29 19:46:00 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**sl_split(char const *s, char c)
 		len = word_len(s, c);
 		if (len)
 		{
-			tab[i] = strndup(s, len);
+			tab[i] = ft_strndup(s, len);
 			if (!tab[i++])
 				return (NULL);
 			s += len;

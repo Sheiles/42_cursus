@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 12:11:05 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/29 21:06:30 by sheiles          ###   ########.fr       */
+/*   Updated: 2025/04/30 01:34:31 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	send_bit(pid_t server_pid, int bit)
 			exit(EXIT_FAILURE);
 		}
 	}
-	usleep(100);
+	usleep(250);
 }
 
 void	send_char(pid_t server_pid, char c)
