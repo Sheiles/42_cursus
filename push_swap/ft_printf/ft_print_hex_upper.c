@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_print_hex_upper.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 00:35:10 by sheiles           #+#    #+#             */
-/*   Updated: 2025/05/01 00:35:12 by sheiles          ###   ########.fr       */
+/*   Created: 2024/11/08 10:33:16 by sheiles           #+#    #+#             */
+/*   Updated: 2024/11/21 12:29:39 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "ft_printf.h"
 
-void	free_stack(t_stack **stack)
+int	ft_print_hex_upper(unsigned long n)
 {
-	t_stack	*tmp;
+	char	*hex;
+	int		count;
 
-	while (*stack)
-	{
-		tmp = (*stack)->next;
-		free(*stack);
-		*stack = tmp;
-	}
+	count = 0;
+	hex = "0123456789ABCDEF";
+	if (n >= 16)
+		count += ft_print_hex_upper(n / 16);
+	count += write(1, &hex[n % 16], 1);
+	return (count);
 }

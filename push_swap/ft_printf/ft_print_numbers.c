@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_print_numbers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 00:35:10 by sheiles           #+#    #+#             */
-/*   Updated: 2025/05/01 00:35:12 by sheiles          ###   ########.fr       */
+/*   Created: 2024/11/04 11:01:51 by sheiles           #+#    #+#             */
+/*   Updated: 2024/11/06 14:01:28 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "ft_printf.h"
 
-void	free_stack(t_stack **stack)
+int	ft_print_numbers(void)
 {
-	t_stack	*tmp;
+	int	count;
+	int	i;
 
-	while (*stack)
+	count = 0;
+	i = 0;
+	while (i < 10)
 	{
-		tmp = (*stack)->next;
-		free(*stack);
-		*stack = tmp;
+		count += write(1, &i, 1);
+		i++;
 	}
+	return (count);
 }

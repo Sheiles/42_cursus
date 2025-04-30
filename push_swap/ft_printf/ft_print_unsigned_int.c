@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_print_unsigned_int.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 00:35:10 by sheiles           #+#    #+#             */
-/*   Updated: 2025/05/01 00:35:12 by sheiles          ###   ########.fr       */
+/*   Created: 2024/11/05 11:38:52 by sheiles           #+#    #+#             */
+/*   Updated: 2024/11/13 14:05:12 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "ft_printf.h"
 
-void	free_stack(t_stack **stack)
+int	ft_print_unsigned_int(unsigned int n)
 {
-	t_stack	*tmp;
+	int	len;
 
-	while (*stack)
+	len = 0;
+	if (n >= 10)
 	{
-		tmp = (*stack)->next;
-		free(*stack);
-		*stack = tmp;
+		len += ft_print_unsigned_int(n / 10);
+		len += ft_print_char(n % 10 + '0');
 	}
+	else
+	{
+		len += ft_print_char(n + '0');
+	}
+	return (len);
 }

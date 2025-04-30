@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_stack.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/01 00:35:13 by sheiles           #+#    #+#             */
+/*   Updated: 2025/05/01 00:39:42 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
 static int	is_number(char *str)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	if (!str[i])
 		return (0);
 	if (str[i] == '-' || str[i] == '+')
@@ -64,8 +77,8 @@ static void	split_and_fill(t_stack **a, char *arg)
 
 t_stack	*parse_args(int argc, char **argv)
 {
-	t_stack	*a;
-	int		i;
+	t_stack		*a;
+	int			i;
 
 	a = NULL;
 	i = 1;
@@ -75,27 +88,4 @@ t_stack	*parse_args(int argc, char **argv)
 		i++;
 	}
 	return (a);
-}
-
-void	assign_index(t_stack *stack)
-{
-	t_stack	*tmp;
-	t_stack	*min;
-	int		index;
-
-	index = 0;
-	while (1)
-	{
-		tmp = stack;
-		min = NULL;
-		while (tmp)
-		{
-			if (tmp->index == -1 && (!min || tmp->value < min->value))
-				min = tmp;
-			tmp = tmp->next;
-		}
-		if (!min)
-			break ;
-		min->index = index++;
-	}
 }
