@@ -1,6 +1,8 @@
 #include "philo.h"
 
 int init_data(t_data *data, int argc, char **argv) {
+    int i;
+
     data->num_philos = atoi(argv[1]);
     data->time_to_die = atol(argv[2]);
     data->time_to_eat = atol(argv[3]);
@@ -16,12 +18,14 @@ int init_data(t_data *data, int argc, char **argv) {
 
     pthread_mutex_init(&data->print_lock, NULL);
 
-    for (int i = 0; i < data->num_philos; i++) {
+    i = 0;
+    while (i < data->num_philos) {
         pthread_mutex_init(&data->forks[i], NULL);
         data->philos[i].id = i + 1;
         data->philos[i].meals_eaten = 0;
         data->philos[i].last_meal = get_time();
         data->philos[i].data = data;
+        i++;
     }
     return (0);
 }

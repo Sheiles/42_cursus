@@ -28,16 +28,16 @@ typedef struct s_data {
     t_philosopher       *philos;
 } t_data;
 
-/* Initialization */
+
 int     init_data(t_data *data, int argc, char **argv);
 
-/* Philosopher actions */
+
 void    *philosopher_routine(void *arg);
 
-/* Monitor */
+
 void    *monitor_routine(void *arg);
 
-/* Time and Utils */
+
 long    get_time(void);
 void    smart_sleep(long time_in_ms);
 void    log_status(t_data *data, int id, const char *msg);
