@@ -37,7 +37,6 @@ void    *philosopher_routine(void *arg);
 
 void    *monitor_routine(void *arg);
 
-
 long    get_time(void);
 void    smart_sleep(long time_in_ms);
 void    log_status(t_data *data, int id, const char *msg);
