@@ -1,0 +1,69 @@
+
+#ifndef PHILO_H
+# define PHILO_H
+
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/time.h>
+
+typedef struct s_philosopher
+{
+	int					id;
+	pthread_t			thread;
+	long				last_meal;
+	int					meals_eaten;
+	pthread_mutex_t		meal_lock;
+	struct s_data		*data;
+}	t_philosopher;
+
+typedef struct s_data
+{
+	int					num_philos;
+	long				time_to_die;
+	long				time_to_eat;
+	long				time_to_sleep;
+	int					must_eat_count;
+	int					is_dead;
+	int					all_eaten;
+	long				start_time;
+	pthread_mutex_t		*forks;
+	pthread_mutex_t		print_lock;
+	pthread_mutex_t		death_lock;
+	t_philosopher		*philos;
+}	t_data;
+
+/* Initialization functions */
+int		init_data(t_data *data, int argc, char **argv);
+
+/* Argument validation functions */
+int		validate_args(int argc, char **argv);
+int		handle_single_philo(t_data *data);
+void	cleanup_resources(t_data *data);
+
+/* Thread management functions */
+void	create_threads(t_data *data, pthread_t *monitor_thread);
+void	join_threads(t_data *data, pthread_t monitor_thread);
+
+/* Philosopher and monitor routines */
+void	*philosopher_routine(void *arg);
+void	*monitor_routine(void *arg);
+
+/* Action functions */
+void	take_forks(t_philosopher *philo);
+void	release_forks(t_philosopher *philo);
+void	eat(t_philosopher *philo);
+
+/* Utility functions */
+long	get_time(void);
+long	get_time_diff(long start_time);
+void	smart_sleep(long time_in_ms);
+void	log_status(t_data *data, int id, const char *msg);
+int		is_simulation_over(t_data *data);
+
+/* Monitoring functions */
+int		check_death(t_data *data, int i);
+int		check_all_eaten(t_data *data);
+
+#endif
