@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 18:35:00 by sheiles           #+#    #+#             */
+/*   Updated: 2026/02/11 19:57:05 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 #ifndef BUFFER_SIZE
@@ -38,12 +50,35 @@ static char	*ft_read_line(int fd, char *buffer, char *line)
 	return (line);
 }
 
+static char	*process_line(char **line)
+{
+	char	*newline;
+	char	*result;
+
+	newline = ft_strchr(*line, '\n');
+	if (newline)
+	{
+		*newline = '\0';
+		result = ft_strdup(*line);
+		ft_memmove(*line, newline + 1, ft_strlen(newline + 1) + 1);
+		if ((*line)[0] == '\0')
+		{
+			free(*line);
+			*line = NULL;
+		}
+	}
+	else
+	{
+		result = *line;
+		*line = NULL;
+	}
+	return (result);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*line = NULL;
 	char		*buffer;
-	char		*newline;
-	char		*result;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -60,22 +95,5 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 	}
-	newline = ft_strchr(line, '\n');
-	if (newline)
-	{
-		*newline = '\0';
-		result = ft_strdup(line);
-		ft_memmove(line, newline + 1, ft_strlen(newline + 1) + 1);
-		if (line[0] == '\0')
-		{
-			free(line);
-			line = NULL;
-		}
-	}
-	else
-	{
-		result = line;
-		line = NULL;
-	}
-	return (result);
+	return (process_line(&line));
 }

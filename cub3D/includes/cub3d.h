@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 18:20:00 by sheiles           #+#    #+#             */
+/*   Updated: 2026/02/11 20:00:46 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -8,7 +20,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include "Libft/libft.h"
-# include <mlx.h>
+# include "../mlx/mlx.h"
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
@@ -58,6 +70,16 @@ typedef struct s_ray
 	double	distance;
 	int		wall_direction;
 }	t_ray;
+
+typedef struct s_parser_flags
+{
+	int	found_no;
+	int	found_so;
+	int	found_we;
+	int	found_ea;
+	int	found_f;
+	int	found_c;
+}	t_parser_flags;
 
 typedef struct s_game
 {

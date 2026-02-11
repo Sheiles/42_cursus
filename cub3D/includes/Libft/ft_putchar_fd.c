@@ -6,7 +6,7 @@
 /*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:21:09 by sheiles           #+#    #+#             */
-/*   Updated: 2024/10/30 22:07:07 by sheiles          ###   ########.fr       */
+/*   Updated: 2026/02/11 18:32:44 by sheiles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,3 @@ void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }
- 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycaster.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 18:20:35 by sheiles           #+#    #+#             */
+/*   Updated: 2026/02/11 19:57:05 by sheiles          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 double	cast_ray(t_game *game, double angle)
@@ -51,7 +63,7 @@ void	raycaster(t_game *game)
 	x = 0;
 	while (x < game->width)
 	{
-		ray_angle = game->player.angle - (fov_rad / 2.0) 
+		ray_angle = game->player.angle - (fov_rad / 2.0)
 			+ ((double)x / game->width) * fov_rad;
 		distance = cast_ray(game, ray_angle);
 		distance *= cos(ray_angle - game->player.angle);
