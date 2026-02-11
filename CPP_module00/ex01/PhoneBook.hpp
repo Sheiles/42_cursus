@@ -12,6 +12,7 @@ private:
 
 public:
 	PhoneBook();
+	~PhoneBook();
 
 	void addContact(const Contact &c);
 	void printTable() const;

@@ -15,6 +15,7 @@ private:
 
 public:
 	Contact();
+	~Contact();
 
 	void setFirstName(const std::string &v);
 	void setLastName(const std::string &v);

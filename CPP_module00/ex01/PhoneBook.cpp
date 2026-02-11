@@ -5,6 +5,8 @@
 
 PhoneBook::PhoneBook() : _count(0), _nextIndex(0) {}
 
+PhoneBook::~PhoneBook() {}
+
 void PhoneBook::addContact(const Contact &c)
 {
 	_contacts[_nextIndex] = c;

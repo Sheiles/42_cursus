@@ -2,6 +2,8 @@
 
 Contact::Contact() : _isSet(false) {}
 
+Contact::~Contact() {}
+
 void Contact::setFirstName(const std::string &v) { _firstName = v; }
 void Contact::setLastName(const std::string &v) { _lastName = v; }
 void Contact::setNickname(const std::string &v) { _nickname = v; }
