@@ -6,8 +6,12 @@ int main(void)
 	int hordeSize = 5;
 	Zombie* horde = zombieHorde(hordeSize, "Zombie");
 
-	for (int i = 0; i < hordeSize; i++)
+	int i = 0;
+	while (i < hordeSize)
+	{
 		horde[i].announce();
+		i++;
+	}
 
 	delete[] horde;
 

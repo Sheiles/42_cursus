@@ -8,23 +8,23 @@ int main(void)
 	std::cout << "=== Creating animals ===" << std::endl;
 	const Animal* j = new Dog();
 	const Animal* i = new Cat();
-
 	std::cout << "\n=== Array of animals ===" << std::endl;
-	const Animal* animals[4];
-	animals[0] = new Dog();
-	animals[1] = new Cat();
-	animals[2] = new Dog();
-	animals[3] = new Cat();
-
+	const Animal* animals[4] = {new Dog(), new Cat(), new Dog(), new Cat()};
 	std::cout << "\n=== Making sounds ===" << std::endl;
-	for (int k = 0; k < 4; k++)
+	int k = 0;
+	while (k < 4)
+	{
 		animals[k]->makeSound();
-
+		k++;
+	}
 	std::cout << "\n=== Deletion ===" << std::endl;
 	delete j;
 	delete i;
-	for (int k = 0; k < 4; k++)
+	k = 0;
+	while (k < 4)
+	{
 		delete animals[k];
-
+		k++;
+	}
 	return 0;
 }
