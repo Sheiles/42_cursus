@@ -1,23 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 16:46:17 by sheiles           #+#    #+#             */
-/*   Updated: 2025/08/09 16:46:18 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #include "libft.h"
 
-/**
- * @brief Count the number of digits of the int 'n'.
- * 
- * @param n Integer that will have its 'digits' counted.
- * @return Number of digits.
- */
+
 static int	ft_nbrlen(int n)
 {
 	int	digits;
@@ -35,14 +30,7 @@ static int	ft_nbrlen(int n)
 	return (digits);
 }
 
-/**
- * @brief Convert a each digit of integer 'n' with 'digits' digits and copy to
- * the previews allocated string 's'.
- * 
- * @param s String were the digits will be allocated.
- * @param n Integer to be converted.
- * @param digits Number of digits of 'n'.
- */
+
 static void	ft_convert(char *s, int n, int digits)
 {
 	unsigned int	u_n;

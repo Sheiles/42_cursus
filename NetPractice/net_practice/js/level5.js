@@ -7,7 +7,7 @@ var hosts = [
     {'id':'R', 'type':'router', 'name':'The Mighty Router', 'geometry':'200x200+400+500', 'img':'router.png', 'labelpos':'-190,110'}
 ];
 
-// routes are processed in order, first match only is used => default must be last - KEEP routes before interfaces for random reference
+
 var routes = [
     {'hid':'A', 'rid':'Ar1', 'route':'10..0.0.0/8', 'gate':'192.168.0.254', 'route_edit':'true', 'gate_edit':'true'},
     {'hid':'B', 'rid':'Br1', 'route':'default', 'gate':'192.168.0.254', 'route_edit':'false', 'gate_edit':'true'}

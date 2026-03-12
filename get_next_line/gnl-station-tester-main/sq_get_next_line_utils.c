@@ -1,18 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 12:15:04 by sheiles           #+#    #+#             */
-/*   Updated: 2024/12/02 15:45:55 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #include "get_next_line.h"
-#include <stddef.h> // Ajouté pour size_t et NULL
-#include <stdlib.h> // Ajouté pour malloc et free
+#include <stddef.h> 
+#include <stdlib.h> 
 
 size_t	ft_strlen(const char *s)
 {

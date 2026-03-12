@@ -8,7 +8,7 @@ var g_logs_open = 0;
 
 function my_console_log(str)
 {
-//    console.log(str);
+
 }
 
 
@@ -22,7 +22,7 @@ function hash_login(login)
 	else
 	    seed += 5 * login.charCodeAt(i) * i;
     }
-//    console.log("hash login: '"+login+"' -> "+seed);
+
     return (seed);
 }
 
@@ -73,7 +73,7 @@ function random_repl(str)
     }
 
     if (str2 == "default") return (str2);
-    // check if any non digital, non dot, non slash char, except previous line
+    
     regex = /[^\d\.\/]/g;
     if (regex.exec(str2))
 	return (null);
@@ -106,7 +106,7 @@ function show_host(root, h)
     newelem.style.backgroundImage = 'url(img/'+h['img']+')';
     root.appendChild(newelem);
 
-    // label + routes
+    
     var tab = h['labelpos'].split(',');
     if (tab.length != 2) err("host id "+h['id'], "labelpos parsing");
     h['lx'] = parseInt(tab[0]);
@@ -144,7 +144,7 @@ function get_route_info(r)
     if (r['route_edit'] == 'true') route_active = ''; else route_active = 'disabled';
     if (r['gate_edit'] == 'true') gate_active = ''; else gate_active = 'disabled';
     var routestr = '<input size=15 type=text id=route_'+r['rid']+' value="'+r['route']+'" '+route_active+'> =&gt; <input size=15 type=text id=gate_'+r['rid']+' value="'+r['gate']+'" '+gate_active+'>';
-//    my_console_log("add label route: ##"+routestr);
+
     return (routestr);
 }
 
@@ -314,7 +314,7 @@ function all_goals()
 				document.getElementById("goals_id").innerHTML += " &nbsp; <input type=button value='Complete!' onclick='window.location=\"end.html\";'>";
 		}
 		else
-		{   // defense case
+		{   
 			document.getElementById("goals_id").innerHTML += " &nbsp; <input type=button value='Next' onclick='window.location=next_eval();'>";
 		}		
     }
@@ -325,8 +325,8 @@ function all_goals()
 function load_board()
 {
     if (!(g_my_login = localStorage.getItem("g_my_login")))
-	g_my_login = ''; // will means evaluation & full random
-    g_rand_prev = level + hash_login(g_my_login); // initialize replayable pseudo random generator
+	g_my_login = ''; 
+    g_rand_prev = level + hash_login(g_my_login); 
     if (g_my_login == '')
 	g_eval_lvls = JSON.parse(localStorage.getItem("g_my_eval"));
     
@@ -340,18 +340,18 @@ function load_board()
 
     goals.forEach(elem => prep_goals(elem));
     all_goals();
-    // only for very first time: don't show any log
+    
     document.getElementById("logs_id").innerHTML = '<center>Logs will be displayed here</center>';
 	document.getElementById("logs_button_id").onclick = () => {
 		if (g_logs_open == 0)
 		{
 			document.getElementById("logs_container_id").style.height = (window.innerHeight - 30)+"px";
-			var e = document.getElementById("logs_button_id").innerHTML = "⬇";
+			var e = document.getElementById("logs_button_id").innerHTML = "â¬‡";
 		}
 		else
 		{
 			document.getElementById("logs_container_id").style.height = "200px";
-			var e = document.getElementById("logs_button_id").innerHTML = "⬆";
+			var e = document.getElementById("logs_button_id").innerHTML = "â¬†";
 		}
 		g_logs_open = 1-g_logs_open;
 	}

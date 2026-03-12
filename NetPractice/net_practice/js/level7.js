@@ -8,7 +8,7 @@ var hosts = [
     {'id':'R2', 'type':'router', 'name':'adm.non-real.net', 'geometry':'200x200+400+700', 'img':'router.png', 'labelpos':'-30,190'}
 ];
 
-// routes are processed in order, first match only is used => default must be last - KEEP routes before interfaces for random reference
+
 var routes = [
     {'hid':'A', 'rid':'Ar1', 'route':'0.0.0.0/0', 'gate':'0.0.0.0', 'route_edit':'true', 'gate_edit':'true'},
     {'hid':'C', 'rid':'Cr1', 'route':'0.0.0.0/0', 'gate':'0.0.0.0', 'route_edit':'true', 'gate_edit':'true'},

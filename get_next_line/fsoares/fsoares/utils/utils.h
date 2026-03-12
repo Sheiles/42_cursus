@@ -124,9 +124,7 @@ struct alloc_node
 		}                                                   \
 	}
 
-/**
- * @brief Macro that wraps a get_next_line_test
- */
+
 #define BASE_TEST(title, code)                  \
 	TEST_WRAPPER(title, {                       \
 		g_test = 1;                             \
@@ -197,14 +195,7 @@ int same_size(void *ptr, void *ptr_std);
 int same_string(char *expected, char *actual);
 char *my_strdup(const char *s1);
 char *my_strndup(const char *s1, size_t size);
-/**
- * @brief In normal mode makes sure that you reserved enough space.
- * In strict makes sure that you reserved the correct amount of space.
- *
- * @param ptr The pointer to check how much memory was allocated
- * @param expected_size The expected allocated size
- * @return If it passes or fails the test
- */
+
 int check_mem_size(void *ptr, size_t expected_size);
 
 int reset_malloc_mock();

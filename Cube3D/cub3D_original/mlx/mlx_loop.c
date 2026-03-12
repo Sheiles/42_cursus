@@ -1,12 +1,4 @@
-/*
-** mlx_loop.c for MiniLibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Wed Aug  2 18:58:11 2000 Charlie Root
-** Last update Fri Sep 30 14:47:41 2005 Olivier Crouzet
-*/
+
 
 
 #include	"mlx_int.h"

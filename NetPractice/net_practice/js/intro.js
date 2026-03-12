@@ -26,7 +26,7 @@ function load_login()
 {
     var login;
     if (!(login = localStorage.getItem("g_my_login")))
-        login = ''; // will means full random during sim.
+        login = ''; 
     return (login);
 }
 

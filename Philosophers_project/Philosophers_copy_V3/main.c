@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
     if (init_data(&data, argc, argv))
         return (printf("Error initializing data or philosophers\n"));
 
-    // Handle single philosopher case
+    
     if (data.num_philos == 1) {
         printf("0 1 has taken a fork\n");
         smart_sleep(data.time_to_die);
@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
         i++;
     }
 
-    // Cleanup
+    
     i = 0;
     while (i < data.num_philos) {
         pthread_mutex_destroy(&data.forks[i]);

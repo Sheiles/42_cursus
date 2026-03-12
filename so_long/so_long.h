@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/27 14:09:45 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/29 19:51:02 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
@@ -66,45 +66,45 @@ typedef struct s_count
 	int	keys;
 }	t_count;
 
-/* event.c */
+
 void	move_player(t_game *game, int new_x, int new_y);
 int		handle_key(int keycode, t_game *game);
 
-/* exit.c */
+
 void	destroy_images(t_game *game);
 int		handle_exit(t_game *game);
 
-/* free_split.c */
+
 void	free_split(char **split);
 
-/* load_image.c */
+
 void	load_images(t_game *game);
 
-/* main.c */
+
 int		error(char *msg);
 void	game_init(t_game *game, char *mapfile);
 
-/* map_checker.c */
+
 int		is_valid_map(t_game *game);
 
-/* map.c */
+
 char	*read_file(char *filename);
 int		load_map(t_game *game, char *filename);
 void	free_map(t_game *game);
 
-/* path_check.c */
+
 int		check_valid_path(t_game *game);
 char	**copy_map(char **map, int height);
 void	flood_fill(char **map, int x, int y);
 
-/* render.c */
+
 void	draw_key(t_game *game, int x, int y);
 void	draw_exit(t_game *game, int x, int y);
 void	draw_player(t_game *game, int x, int y);
 void	draw_tile(t_game *game, int x, int y);
 void	render_map(t_game *game);
 
-/* utilities.c */
+
 size_t	sl_strlen(const char *s);
 void	sl_putstr_fd(char *s, int fd);
 int		word_count(const char *s, char c);

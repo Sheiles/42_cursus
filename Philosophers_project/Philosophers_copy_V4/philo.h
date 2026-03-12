@@ -34,35 +34,35 @@ typedef struct s_data
 	t_philosopher		*philos;
 }	t_data;
 
-/* Initialization functions */
+
 int		init_data(t_data *data, int argc, char **argv);
 
-/* Argument validation functions */
+
 int		validate_args(int argc, char **argv);
 int		handle_single_philo(t_data *data);
 void	cleanup_resources(t_data *data);
 
-/* Thread management functions */
+
 void	create_threads(t_data *data, pthread_t *monitor_thread);
 void	join_threads(t_data *data, pthread_t monitor_thread);
 
-/* Philosopher and monitor routines */
+
 void	*philosopher_routine(void *arg);
 void	*monitor_routine(void *arg);
 
-/* Action functions */
+
 void	take_forks(t_philosopher *philo);
 void	release_forks(t_philosopher *philo);
 void	eat(t_philosopher *philo);
 
-/* Utility functions */
+
 long	get_time(void);
 long	get_time_diff(long start_time);
 void	smart_sleep(long time_in_ms);
 void	log_status(t_data *data, int id, const char *msg);
 int		is_simulation_over(t_data *data);
 
-/* Monitoring functions */
+
 int		check_death(t_data *data, int i);
 int		check_all_eaten(t_data *data);
 

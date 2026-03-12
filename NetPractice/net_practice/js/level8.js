@@ -9,7 +9,7 @@ var hosts = [
     {'id':'I', 'type':'internet', 'name':'Internet', 'geometry':'200x240+900+175', 'img':'internet.png', 'labelpos':'-50,200'},
 ];
 
-// routes are processed in order, first match only is used => default must be last - KEEP routes before interfaces for random reference and keep routes in host order
+
 var routes = [
     {'hid':'C', 'rid':'Cr1', 'route':'0.0.0.0/0', 'gate':'10.0.0.254', 'route_edit':'true', 'gate_edit':'true'},
     {'hid':'D', 'rid':'Dr1', 'route':'default', 'gate':'9.9.9.9', 'route_edit':'true', 'gate_edit':'true'},

@@ -1,7 +1,7 @@
 #include "Point.hpp"
 #include "Fixed.hpp"
 
-// Function to compute the area of a triangle given three points
+
 static Fixed computeArea(Point const a, Point const b, Point const c)
 {
 	Fixed area;
@@ -23,6 +23,6 @@ bool bsp(Point const a, Point const b, Point const c, Point const point)
 	Fixed areaACP = computeArea(a, c, point);
 	Fixed areaBCP = computeArea(b, c, point);
 
-	// If point is inside the triangle, sum of sub-areas should equal the main area
+	
 	return (areaABC == (areaABP + areaACP + areaBCP));
 }

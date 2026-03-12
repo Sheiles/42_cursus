@@ -1,23 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 16:49:18 by sheiles           #+#    #+#             */
-/*   Updated: 2025/08/09 16:49:25 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #include "libft.h"
 
-/**
- * @brief Set the new line position.
- * 
- * @param buffer String where the newline character will be searched.
- * @return 
- */
+
 static size_t	set_nl(char **buffer)
 {
 	size_t	nl_pos;
@@ -30,15 +25,7 @@ static size_t	set_nl(char **buffer)
 	return (nl_pos);
 }
 
-/**
- * @brief Stores the contents of 'line', allocate space using malloc() for the
- * content stored in 'line' and for the content brought in by 'buffer' and
- * stores them in the new 'line'.
- * 
- * @param line Content that will be relocated to the new 'line'.
- * @param buffer Content that will be added in 'line'.
- * @return Pointer where 'line' will be allocated.
- */
+
 static char	*split_line(char *line, char *buffer)
 {
 	char	*temp_line;
@@ -66,17 +53,7 @@ static char	*split_line(char *line, char *buffer)
 	return (line);
 }
 
-/**
- * @brief Read the content inside a file opened on the File Descriptor 'fd' to
- * 'buffer' and allocate to the address pointed by 'line'.
- * 
- * @param line Will receive a new address with the allocated content of old
- * 'line' and 'buffer'.
- * @param buffer Content that will be added in 'line'.
- * @param fd The file descriptor to read from.
- * @return number of bytes readed or -1 if an error occurred reading bytes or
- * allocating memory to line.
- */
+
 static ssize_t	read_file(char **line, char *buffer, int fd)
 {
 	ssize_t	read_bytes;
@@ -103,15 +80,7 @@ static ssize_t	read_file(char **line, char *buffer, int fd)
 	return (read_bytes);
 }
 
-/**
- * @brief Run a tests on 'fd', 'line' and 'buffer and allocate space to 'buffer'
- * if not already initialized.
- * 
- * @param fd The file descriptor to read from.
- * @param line Pointer to String 'line'.
- * @param buffer Content that will be added in 'line'.
- * @return 1 if successful, or 0 if not.
- */
+
 static char	check(int fd, char **line, char **buffer)
 {
 	if (fd < 0 || fd >= 1024)

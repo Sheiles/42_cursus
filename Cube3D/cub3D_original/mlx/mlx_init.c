@@ -1,12 +1,4 @@
-/*
-** mlx_init.c for MiniLibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Mon Jul 31 16:52:42 2000 Charlie Root
-** Last update Fri Jan 28 17:05:09 2005 Olivier Crouzet
-*/
+
 
 
 #include	"mlx_int.h"
@@ -49,11 +41,7 @@ void	*mlx_init()
 }
 
 
-/*
-** pshm_format of -1 :	Not XYBitmap|XYPixmap|ZPixmap
-** alpha libX need a check of the DISPLAY env var, or shm is allowed
-** in remote Xserver connections.
-*/
+
 
 int		mlx_int_deal_shm(t_xvar *xvar)
 {
@@ -77,9 +65,7 @@ int		mlx_int_deal_shm(t_xvar *xvar)
 	}
 }
 
-/*
-** TrueColor Visual is needed to have *_mask correctly set
-*/
+
 
 int		mlx_int_rgb_conversion(t_xvar *xvar)
 {

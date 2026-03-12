@@ -18,7 +18,7 @@ static std::string readNonEmptyField(const std::string &prompt)
 	while (true)
 	{
 		if (!readLine(prompt, s))
-			return std::string(); // EOF => renvoie vide, main gérera
+			return std::string(); 
 		if (!s.empty())
 			return s;
 		std::cout << "Field cannot be empty." << std::endl;
@@ -27,8 +27,8 @@ static std::string readNonEmptyField(const std::string &prompt)
 
 static bool isDigitsSpacesPlus(const std::string &s)
 {
-	// optionnel : accepte chiffres, espaces, +, -, (), .
-	// (les règles ne l'exigent pas, mais ça évite n'importe quoi)
+	
+	
 	for (std::string::size_type i = 0; i < s.size(); ++i)
 	{
 		char c = s[i];
@@ -125,7 +125,7 @@ int main()
 		}
 		else
 		{
-			// input ignoré
+			
 			continue;
 		}
 	}

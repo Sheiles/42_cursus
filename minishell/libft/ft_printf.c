@@ -1,23 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 16:47:42 by sheiles           #+#    #+#             */
-/*   Updated: 2025/08/09 16:47:44 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #include "libft.h"
 
-/**
- * @brief Print a string and return the printed amount.
- * 
- * @param s String to be printed.
- * @return Number of printed characters.
- */
+
 static int	ft_print_txt(const char *s)
 {
 	int	str_len;
@@ -31,15 +26,7 @@ static int	ft_print_txt(const char *s)
 	return (write (1, s, str_len));
 }
 
-/**
- * @brief Print a number and return the number of printed characters.
- * 
- * @param n Number to be printed.
- * @param specifier 'd' or 'i' for integer numbers, 'p' for memory address and
- * 'x' or 'X' for hexadecimals numbers.
- * @param base '10' for decimal and '16' for hexadecimal.
- * @return Number of printed characters.
- */
+
 static int	ft_print_nbr(long n, char specifier, unsigned long base)
 {
 	unsigned long	u_n;
@@ -69,14 +56,7 @@ static int	ft_print_nbr(long n, char specifier, unsigned long base)
 	return (print_count);
 }
 
-/**
- * @brief Select the appropriate function for the current specifier in 's' to
- * print the current 'arg' var.
- * 
- * @param s Pointer to the current specifier
- * @param args A va_list pointing to the current var to be printed.
- * @return Number of printed characters.
- */
+
 static int	call_specifier(const char *s, va_list args)
 {
 	int		count;

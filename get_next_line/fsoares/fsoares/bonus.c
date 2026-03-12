@@ -42,11 +42,11 @@ int main(int argn, char **argv)
 		char *other = "lines_around_10.txt";
 		int fd = open(name, O_RDONLY);
 		int fd2 = open(other, O_RDONLY);
-		/* 1 */ test_gnl(fd, "aaaaaaaaaa\n");
-		/* 2 */ test_gnl(fd2, "0123456789\n");
-		/* 3 */ test_gnl(fd, "bbbbbbbbbb\n");
-		/* 4 */ test_gnl(fd2, "012345678\n");
-		// next read call will error out
+		 test_gnl(fd, "aaaaaaaaaa\n");
+		 test_gnl(fd2, "0123456789\n");
+		 test_gnl(fd, "bbbbbbbbbb\n");
+		 test_gnl(fd2, "012345678\n");
+		
 		next_read_error = 1;
 		if (BUFFER_SIZE > 100) {
 			char *temp;
@@ -56,37 +56,37 @@ int main(int argn, char **argv)
 				free(temp);
 			} while (temp != NULL);
 		}
-		/* 5 */ test_gnl(fd, NULL);
+		 test_gnl(fd, NULL);
 		next_read_error = 0;
 		close(fd);
-		/* 6 */ test_gnl(fd2, "90123456789\n");
+		 test_gnl(fd2, "90123456789\n");
 		fd = open(name, O_RDONLY);
-		/* 7 */ test_gnl(fd, "aaaaaaaaaa\n");
-		/* 8 */ test_gnl(fd2, "0123456789\n");
-		/* 9 */ test_gnl(fd, "bbbbbbbbbb\n");
-		/* 10 */ test_gnl(fd, "cccccccccc\n");
-		/* 11 */ test_gnl(fd2, "xxxx\n");
-		/* 12 */ test_gnl(fd2, NULL);
-		/* 13 */ test_gnl(fd, "dddddddddd\n");
-		/* 14 */ test_gnl(fd, NULL);
+		 test_gnl(fd, "aaaaaaaaaa\n");
+		 test_gnl(fd2, "0123456789\n");
+		 test_gnl(fd, "bbbbbbbbbb\n");
+		 test_gnl(fd, "cccccccccc\n");
+		 test_gnl(fd2, "xxxx\n");
+		 test_gnl(fd2, NULL);
+		 test_gnl(fd, "dddddddddd\n");
+		 test_gnl(fd, NULL);
 	});
 
 	TEST("2 file descriptors", {
 		char *name = "lines_around_10.txt";
 		int fd_1 = open(name, O_RDONLY);
 		int fd_2 = open(name, O_RDONLY);
-		/* 1 */ test_gnl(fd_1, "0123456789\n");
-		/* 2 */ test_gnl(fd_2, "0123456789\n");
-		/* 3 */ test_gnl(fd_1, "012345678\n");
-		/* 4 */ test_gnl(fd_2, "012345678\n");
-		/* 5 */ test_gnl(fd_2, "90123456789\n");
-		/* 6 */ test_gnl(fd_2, "0123456789\n");
-		/* 7 */ test_gnl(fd_2, "xxxx\n");
-		/* 8 */ test_gnl(fd_2, NULL);
-		/* 9 */ test_gnl(fd_1, "90123456789\n");
-		/* 10 */ test_gnl(fd_1, "0123456789\n");
-		/* 11 */ test_gnl(fd_1, "xxxx\n");
-		/* 12 */ test_gnl(fd_1, NULL);
+		 test_gnl(fd_1, "0123456789\n");
+		 test_gnl(fd_2, "0123456789\n");
+		 test_gnl(fd_1, "012345678\n");
+		 test_gnl(fd_2, "012345678\n");
+		 test_gnl(fd_2, "90123456789\n");
+		 test_gnl(fd_2, "0123456789\n");
+		 test_gnl(fd_2, "xxxx\n");
+		 test_gnl(fd_2, NULL);
+		 test_gnl(fd_1, "90123456789\n");
+		 test_gnl(fd_1, "0123456789\n");
+		 test_gnl(fd_1, "xxxx\n");
+		 test_gnl(fd_1, NULL);
 	});
 
 	TEST("multiple fds", {
@@ -100,30 +100,30 @@ int main(int argn, char **argv)
 		int fd_1 = open(name, O_RDONLY);
 		int fd_2 = open(name, O_RDONLY);
 		int fd_3 = open(name, O_RDONLY);
-		/* 1 */ test_gnl(fd_1, "0123456789\n");
-		/* 2 */ test_gnl(fd_2, "0123456789\n");
-		/* 3 */ test_gnl(fd_3, "0123456789\n");
-		/* 4 */ test_gnl(fd_1, "012345678\n");
-		/* 5 */ test_gnl(fd_2, "012345678\n");
-		/* 6 */ test_gnl(fd_2, "90123456789\n");
+		 test_gnl(fd_1, "0123456789\n");
+		 test_gnl(fd_2, "0123456789\n");
+		 test_gnl(fd_3, "0123456789\n");
+		 test_gnl(fd_1, "012345678\n");
+		 test_gnl(fd_2, "012345678\n");
+		 test_gnl(fd_2, "90123456789\n");
 
 		int fd_4 = open("giant_line_nl.txt", O_RDONLY);
-		/* 7 */ test_gnl(fd_2, "0123456789\n");
-		/* 8 */ test_gnl(fd_3, "012345678\n");
-		/* 9 */ test_gnl(fd_4, expected);
-		/* 10 */ test_gnl(fd_2, "xxxx\n");
-		/* 11 */ test_gnl(fd_2, NULL);
-		/* 12 */ test_gnl(fd_1, "90123456789\n");
-		/* 13 */ test_gnl(fd_4, "another line!!!");
-		/* 14 */ test_gnl(fd_1, "0123456789\n");
-		/* 15 */ test_gnl(fd_4, NULL);
-		/* 16 */ test_gnl(fd_1, "xxxx\n");
-		/* 17 */ test_gnl(fd_4, NULL);
-		/* 18 */ test_gnl(fd_3, "90123456789\n");
-		/* 19 */ test_gnl(fd_3, "0123456789\n");
-		/* 20 */ test_gnl(fd_1, NULL);
-		/* 21 */ test_gnl(fd_3, "xxxx\n");
-		/* 22 */ test_gnl(fd_3, NULL);
+		 test_gnl(fd_2, "0123456789\n");
+		 test_gnl(fd_3, "012345678\n");
+		 test_gnl(fd_4, expected);
+		 test_gnl(fd_2, "xxxx\n");
+		 test_gnl(fd_2, NULL);
+		 test_gnl(fd_1, "90123456789\n");
+		 test_gnl(fd_4, "another line!!!");
+		 test_gnl(fd_1, "0123456789\n");
+		 test_gnl(fd_4, NULL);
+		 test_gnl(fd_1, "xxxx\n");
+		 test_gnl(fd_4, NULL);
+		 test_gnl(fd_3, "90123456789\n");
+		 test_gnl(fd_3, "0123456789\n");
+		 test_gnl(fd_1, NULL);
+		 test_gnl(fd_3, "xxxx\n");
+		 test_gnl(fd_3, NULL);
 	});
 
 #ifdef STRICT_MEM

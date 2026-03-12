@@ -16,7 +16,7 @@
 
 extern int next_read_error;
 
-/* for file tester */
+
 int leak_check();
 int test_gnl_func(int fd, char *expected, char *input);
 int test_gnl_func_limits(int fd, char *expected, int line, char *content, char *input);

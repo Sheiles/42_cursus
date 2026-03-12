@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   events.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 18:32:30 by sheiles           #+#    #+#             */
-/*   Updated: 2025/04/29 18:55:35 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #include "so_long.h"
 
@@ -47,7 +47,7 @@ void	move_player(t_game *game, int new_x, int new_y)
 	{
 		if (count_key(game) == 0)
 		{
-			ft_printf("GG, tu as gagné !\n");
+			ft_printf("GG, tu as gagnÃ© !\n");
 			handle_exit(game);
 		}
 		else

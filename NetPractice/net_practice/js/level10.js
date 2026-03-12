@@ -12,7 +12,7 @@ var hosts = [
     {'id':'S1', 'type':'switch', 'name':'Switch one', 'geometry':'150x150+800+600', 'img':'switch.png', 'labelpos':'80,110'}
 ];
 
-// routes are processed in order, first match only is used => default must be last - KEEP routes before interfaces for random reference
+
 var routes = [
     {'hid':'H1', 'rid':'H1r1', 'route':'0.0.0.0/0', 'gate':'[128-170]a.[1-254]b.[1-254]c.1', 'route_edit':'false', 'gate_edit':'false'},
     {'hid':'H2', 'rid':'H2r1', 'route':'default', 'gate':'[a].[b].[c].1', 'route_edit':'false', 'gate_edit':'false'},

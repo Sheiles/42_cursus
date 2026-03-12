@@ -8,9 +8,9 @@ DiamondTrap::DiamondTrap(void) : ClapTrap(), FragTrap(), ScavTrap(), _name("Defa
 
 DiamondTrap::DiamondTrap(const std::string &name) : ClapTrap(name + "_clap_name"), FragTrap(name), ScavTrap(name), _name(name)
 {
-	this->_hitPoints = 100;		// from FragTrap
-	this->_energyPoints = 50;	// from ScavTrap
-	this->_attackDamage = 30;	// from FragTrap
+	this->_hitPoints = 100;		
+	this->_energyPoints = 50;	
+	this->_attackDamage = 30;	
 	std::cout << "DiamondTrap constructor called" << std::endl;
 }
 

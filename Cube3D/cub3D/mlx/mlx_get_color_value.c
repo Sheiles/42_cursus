@@ -1,12 +1,4 @@
-/*
-** mlx_get_color_value.c for MiniLibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Mon Jul 31 19:01:33 2000 Charlie Root
-** Last update Thu Oct  4 15:04:13 2001 Charlie Root
-*/
+
 
 
 #include	"mlx_int.h"

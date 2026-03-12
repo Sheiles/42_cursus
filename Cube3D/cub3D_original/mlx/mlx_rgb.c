@@ -1,7 +1,4 @@
-/*
-** This is a generated file with rgb2c.pl and rgb.txt from
-** the XFree86 distribution.
-*/
+
 
 #include	"mlx_int.h"
 

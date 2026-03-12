@@ -14,7 +14,7 @@ void take_forks(t_philosopher *philo) {
     int left_fork = philo->id - 1;
     int right_fork = philo->id % data->num_philos;
 
-    // Prevent deadlock by ordering fork acquisition
+    
     if (philo->id % 2 == 0) {
         pthread_mutex_lock(&data->forks[right_fork]);
         log_status(data, philo->id, "has taken a fork");
@@ -56,7 +56,7 @@ void *philosopher_routine(void *arg) {
     t_philosopher *philo = (t_philosopher *)arg;
     t_data *data = philo->data;
 
-    // Stagger start for even philosophers to prevent deadlock
+    
     if (philo->id % 2 == 0)
         usleep(1000);
 

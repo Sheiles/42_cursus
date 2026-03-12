@@ -7,8 +7,8 @@ class PhoneBook
 {
 private:
 	Contact _contacts[8];
-	int     _count;      // nb contacts effectivement sauvegardés (0..8)
-	int     _nextIndex;  // où écrire le prochain contact (0..7)
+	int     _count;      
+	int     _nextIndex;  
 
 public:
 	PhoneBook();

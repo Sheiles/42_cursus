@@ -22,7 +22,7 @@ public:
 	float toFloat(void) const;
 	int toInt(void) const;
 
-	// Comparison operators
+	
 	bool operator>(const Fixed &rhs) const;
 	bool operator<(const Fixed &rhs) const;
 	bool operator>=(const Fixed &rhs) const;
@@ -30,19 +30,19 @@ public:
 	bool operator==(const Fixed &rhs) const;
 	bool operator!=(const Fixed &rhs) const;
 
-	// Arithmetic operators
+	
 	Fixed operator+(const Fixed &rhs) const;
 	Fixed operator-(const Fixed &rhs) const;
 	Fixed operator*(const Fixed &rhs) const;
 	Fixed operator/(const Fixed &rhs) const;
 
-	// Increment/Decrement operators
-	Fixed &operator++(void);			// pre-increment
-	Fixed operator++(int);				// post-increment
-	Fixed &operator--(void);			// pre-decrement
-	Fixed operator--(int);				// post-decrement
+	
+	Fixed &operator++(void);			
+	Fixed operator++(int);				
+	Fixed &operator--(void);			
+	Fixed operator--(int);				
 
-	// Static member functions
+	
 	static Fixed &min(Fixed &a, Fixed &b);
 	static const Fixed &min(const Fixed &a, const Fixed &b);
 	static Fixed &max(Fixed &a, Fixed &b);

@@ -32,7 +32,7 @@ void Account::_displayTimestamp(void)
 	print2(lt->tm_min);
 	print2(lt->tm_sec);
 	std::cout << "] ";
-	std::cout << std::setfill(' '); // reset
+	std::cout << std::setfill(' '); 
 }
 
 Account::Account(void) {}

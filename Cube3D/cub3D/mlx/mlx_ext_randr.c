@@ -6,7 +6,7 @@
 #include	<unistd.h>
 #include <X11/extensions/Xrandr.h>
 
-/* global for independant extension */
+
 
 RRMode	saved_mode = 0;
 
@@ -66,7 +66,7 @@ int			mlx_ext_fullscreen(t_xvar *xvar, t_win_list *win, int fullscreen)
       return (0);
     }
   if (!fullscreen && saved_mode == -1)
-    idx_candidate = 0; /* if no clue, uses first mode, usually part of npreferred */
+    idx_candidate = 0; 
   mode_candidate = o_info->modes[idx_candidate];
   if (!fullscreen)
     mode_candidate = saved_mode;
@@ -86,7 +86,7 @@ int			mlx_ext_fullscreen(t_xvar *xvar, t_win_list *win, int fullscreen)
 
   if (fullscreen)
     {
-      //      XGrabPointer(xvar->display, win->window, True, 0, GrabModeAsync, GrabModeAsync, win->window, 0L, CurrentTime);
+      
       XGrabKeyboard(xvar->display, win->window, False, GrabModeAsync, GrabModeAsync, CurrentTime);
     }
   else

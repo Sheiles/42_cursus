@@ -42,31 +42,31 @@ typedef struct s_shell
 
 extern t_shell g_shell;
 
-// shell
+
 void	init_shell(char **envp);
 void	free_shell(void);
 
-// parser
+
 t_cmd	*parse_input(char *line);
 void	free_cmds(t_cmd *cmds);
 
-// executor
+
 void	execute(t_cmd *cmds);
 
-// redir
+
 int		handle_redirections(t_redir *redir, int *stdin_fd, int *stdout_fd);
 
-// heredoc
+
 int		handle_heredoc(char *delimiter);
 
-// expansion
+
 char	*expand_variables(char *str);
 
-// builtins
+
 int		is_builtin(char *cmd);
 int		exec_builtin(t_cmd *cmd);
 
-// env utils
+
 t_env	*init_env(char **envp);
 void	free_env(t_env *env);
 char	*get_env_value(char *key);
@@ -74,7 +74,7 @@ void	set_env_value(char *key, char *value);
 void	unset_env_key(char *key);
 char	**env_to_array(void);
 
-// utils
+
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char *s1, char *s2);
 void	free_array(char **arr);

@@ -1,25 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 16:48:04 by sheiles           #+#    #+#             */
-/*   Updated: 2025/08/09 16:48:06 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #include "libft.h"
 
-/**
- * @brief Insert the strings from 's' delimited by 'c' in preview allocated '
- * list'.
- * 
- * @param list Preview allocated array of strings.
- * @param s String to be splitted.
- * @param c Delimiter.
- */
+
 static void	ft_insertstr(char **list, char const *s, char c)
 {
 	size_t	i;

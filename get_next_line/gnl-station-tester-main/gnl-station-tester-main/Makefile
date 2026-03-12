@@ -2,7 +2,7 @@ CC 			= 	gcc
 
 CFG			= 	-Wall -Wextra -Werror -I. -pthread
 
-SRC    	    = 	sq_main.c sq_get_next_line.c sq_get_next_line_utils.c 
+SRC    	    = 	sq_main.c sq_get_next_line.c sq_get_next_line_utils.c
 
 all : setup exec test
 

@@ -1,12 +1,4 @@
-/*
- ** xpm-read.c for MinilibX in 
- ** 
- ** Made by Charlie Root
- ** Login   <ol@epitech.net>
- ** 
- ** Started on  Tue Dec 11 15:25:27 2001 olivier crouzet
- ** Last update Sat Oct  1 14:56:13 2005 Olivier Crouzet
- */
+
 
 
 #include	"mlx_int.h"
@@ -195,24 +187,14 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 				if (!tab[j])
 						RETURN;
 				rgb_col = mlx_int_get_text_rgb(tab[j], tab[j+1]);
-				/*
-				if ((rgb_col = mlx_int_get_text_rgb(tab[j], tab[j+1]))==-1)
-				{
-						if (!(clip_data = malloc(4*width*height)) ||   ok, nice size ..
-										!(clip_img = XCreateImage(xvar->display, xvar->visual,
-														1, XYPixmap, 0, clip_data,
-														width, height, 8, (width+7)/8)) )
-								RETURN;
-						memset(clip_data, 0xFF, 4*width*height);
-				}
-				*/
+				
 				if (method)
 						colors_direct[mlx_int_get_col_name(line,cpp)] = rgb_col;
-								// rgb_col>=0?mlx_get_color_value(xvar, rgb_col):rgb_col;
+								
 				else
 				{
 						colors[i].name = mlx_int_get_col_name(line,cpp);
-						colors[i].col = rgb_col; //rgb_col>=0?mlx_get_color_value(xvar,rgb_col):rgb_col;
+						colors[i].col = rgb_col; 
 				}
 				free(tab);
 				tab = (void *)0;
@@ -246,13 +228,7 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 												j = 0;
 										}
 						}
-						/*
-						if (col==-1)
-								XPutPixel(clip_img, x, height-1-i, 0);
-						else
-								mlx_int_xpm_set_pixel(img, data, opp, col, x);
-						x ++;
-						*/
+						
 						if (col==-1)
 							col = 0xFF000000;
 						mlx_int_xpm_set_pixel(img, data, opp, col, x);
@@ -260,25 +236,7 @@ void	*mlx_int_parse_xpm(t_xvar *xvar,void *info,int info_size,char *(*f)())
 				}
 				data += img->size_line;
 		}
-		/*
-		if (clip_data)
-		{
-				if (!(clip_pix = XCreatePixmap(xvar->display, xvar->root,
-												width, height, 1)) )
-						RETURN;
-				img->gc = XCreateGC(xvar->display, clip_pix, 0, &xgcv);
-				XPutImage(xvar->display, clip_pix, img->gc, clip_img,
-								0, 0, 0, 0, width, height);
-				XFreeGC(xvar->display, img->gc);
-				xgcv.clip_mask = clip_pix;
-				xgcv.function = GXcopy;
-				xgcv.plane_mask = AllPlanes;
-				img->gc = XCreateGC(xvar->display, xvar->root, GCClipMask|GCFunction|
-								GCPlaneMask, &xgcv);
-				XSync(xvar->display, False);
-				XDestroyImage(clip_img);
-		}
-		*/
+		
 		if (colors)
 				free(colors);
 		if (colors_direct)

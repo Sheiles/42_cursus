@@ -1,6 +1,6 @@
 
-/* net Practice CSS */
-/* Warning : some parameters are set / modified by script */
+
+
 
 
 body {
@@ -35,7 +35,7 @@ body {
 
 
 
-/* message box in index.html */
+
 
 .intro_div {
     background-color: #EEEEEE;
@@ -45,7 +45,7 @@ body {
     width:30%;
     margin:auto;
     margin-top: 15%;
-    /* text-align: left; */
+    
     box-shadow: 5px 5px 5px gray;
 
 }
@@ -103,7 +103,7 @@ body {
 	transform: translate(-2px, -2px);
 }
 
-/* goals div */
+
 .goals_div {
 	margin: 5px;
     background-color: #FFFFFF;
@@ -136,7 +136,7 @@ body {
 
 
 
-/* SVG layer */
+
 .svg_layer {
     z-index:-4;
     position:absolute;
@@ -145,7 +145,7 @@ body {
 }
 
 
-/* logs window */
+
 .logs_div {
     background-color: #cce6ff;
     border:1px solid gray;
@@ -189,26 +189,26 @@ body {
 	padding: 3px;
 }
 
-/* host div (image) */
+
 .host_div {
     background-size:contain;
     background-repeat: no-repeat;
     background-position: center;
-    /* will be updated by script : position, top, left, width, height, background-image */
+    
 }
 
 
-/* host info (name, route) div */
+
 .host_info_div {
     min-width: 170px;
     min-height: 50px;
     background-color:rgba(170, 250, 170, 0.9);
-    /* border: 3px solid rgba(150, 150, 255, 0.9); */
+    
 	border: 1px solid gray;
     border-radius: 3px;	
 	box-shadow: 3px 3px 3px gray;
 	padding: 1px;
-    /* will be updated by script : position, top, left */
+    
 }
 
 .host_info_div table {
@@ -223,17 +223,17 @@ body {
     border-collapse: collapse;
 }
 
-/* interface div */
+
 .itf_div {
     min-width: 176px;
     height: 70px;
     background-color: rgba(250, 190, 190, 0.9);
-	/* border: 3px solid rgba(150, 150, 150, 0.9); */
+	
 	border: 1px solid gray;
     border-radius: 3px;
 	box-shadow: 3px 3px 3px gray;
 	padding: 1px;
-    /* will be updated by script : position, top, left */
+    
 }
 
 .itf_div table {
@@ -243,7 +243,7 @@ body {
 	text-align:center;
 }
 
-/* intro footnote */
+
 .footnote {
     font-size:70%;
     font-style:italic;

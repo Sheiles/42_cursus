@@ -6,8 +6,8 @@
 int main(void)
 {
 	std::cout << "=== Creating abstract animals ===" << std::endl;
-	// AAnimal cannot be instantiated
-	// const AAnimal* abstract = new AAnimal(); // This would cause a compilation error
+	
+	
 
 	const AAnimal* j = new Dog();
 	const AAnimal* i = new Cat();

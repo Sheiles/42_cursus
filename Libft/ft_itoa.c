@@ -1,19 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 09:04:28 by sheiles           #+#    #+#             */
-/*   Updated: 2024/10/30 11:03:59 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #include <stdlib.h>
 #include <stddef.h>
 
-// Calculer la longueur de la chaîne nécessaire pour le nombre
+
 static int	ft_numlen(int n)
 {
 	int	len;
@@ -29,7 +29,7 @@ static int	ft_numlen(int n)
 	return (len);
 }
 
-// Convertir un entier en chaîne de caractères
+
 char	*ft_itoa(int n)
 {
 	int		len;

@@ -1,19 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 12:15:12 by sheiles           #+#    #+#             */
-/*   Updated: 2024/12/12 15:59:30 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #include "get_next_line.h"
-#include <stddef.h> // Ajouté pour size_t et NULL
-#include <stdlib.h> // Ajouté pour malloc et free
-#include <unistd.h> // Ajouté pour read
+#include <stddef.h> 
+#include <stdlib.h> 
+#include <unistd.h> 
 
 static char	*read_to_buffer(int fd, char *buffer)
 {

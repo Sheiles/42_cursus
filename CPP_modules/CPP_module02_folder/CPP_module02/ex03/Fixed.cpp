@@ -48,7 +48,7 @@ int Fixed::toInt(void) const
 	return this->_value >> this->_frac_bits;
 }
 
-// Comparison operators
+
 bool Fixed::operator>(const Fixed &rhs) const
 {
 	return this->_value > rhs.getRawBits();
@@ -79,7 +79,7 @@ bool Fixed::operator!=(const Fixed &rhs) const
 	return this->_value != rhs.getRawBits();
 }
 
-// Arithmetic operators
+
 Fixed Fixed::operator+(const Fixed &rhs) const
 {
 	Fixed result;
@@ -108,7 +108,7 @@ Fixed Fixed::operator/(const Fixed &rhs) const
 	return result;
 }
 
-// Increment/Decrement operators
+
 Fixed &Fixed::operator++(void)
 {
 	this->_value++;
@@ -135,7 +135,7 @@ Fixed Fixed::operator--(int)
 	return tmp;
 }
 
-// Static member functions
+
 Fixed &Fixed::min(Fixed &a, Fixed &b)
 {
 	return (a < b) ? a : b;

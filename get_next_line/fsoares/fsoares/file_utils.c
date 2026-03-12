@@ -22,9 +22,7 @@ ssize_t read(int fildes, void *buf, size_t nbyte)
 	return libc_read(fildes, buf, nbyte);
 }
 
-/**
- * Will return zero if there are leaks, 1 if there are no leaks
- */
+
 int leak_check()
 {
 	int res = 1;

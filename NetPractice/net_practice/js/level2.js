@@ -8,7 +8,7 @@ var hosts = [
     {'id':'D', 'type':'host', 'name':'Computer D', 'geometry':'200x220+600+200', 'img':'host.png', 'labelpos':'190,30'}
 ];
 
-// routes are processed in order, first match only is used => default must be last - KEEP routes before interfaces for random reference
+
 var routes = [
 ];
 

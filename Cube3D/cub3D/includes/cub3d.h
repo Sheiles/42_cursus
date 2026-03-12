@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sheiles <sheiles@student.42luxembourg.l    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 18:20:00 by sheiles           #+#    #+#             */
-/*   Updated: 2026/02/11 20:00:46 by sheiles          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -102,7 +102,7 @@ typedef struct s_game
 	int			height;
 }	t_game;
 
-/* PARSING FUNCTIONS */
+
 int		parse_cub_file(char *filename, t_game *game);
 int		parse_no_texture(char *line, t_game *game);
 int		parse_so_texture(char *line, t_game *game);
@@ -113,31 +113,31 @@ int		parse_ceiling_color(char *line, t_game *game);
 int		parse_map(char *filename, t_game *game, int start_line);
 int		validate_map(t_game *game);
 
-/* RAYCASTING FUNCTIONS */
+
 void	raycaster(t_game *game);
 double	cast_ray(t_game *game, double angle);
 int		get_wall_direction(t_game *game, double hit_x, double hit_y);
 
-/* RENDERING FUNCTIONS */
+
 int		render_frame(void *param);
 void	draw_wall_slice(t_game *game, int x, double distance, int wall_dir);
 void	put_pixel(t_game *game, int x, int y, int color);
 int		get_color_from_texture(t_texture *tex, int x, int y);
 
-/* EVENT HANDLING */
+
 int		key_press(int key, t_game *game);
 int		key_release(int key, t_game *game);
 int		mouse_move(int x, int y, t_game *game);
 int		close_window(t_game *game);
 
-/* UTILITY FUNCTIONS */
+
 void	error_exit(char *message);
 void	init_game(t_game *game);
 void	cleanup_game(t_game *game);
 int		is_wall(t_game *game, double x, double y);
 int		check_player_char(t_game *game, int x, int y);
 
-/* KEY CODES (typical minilibX) */
+
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115

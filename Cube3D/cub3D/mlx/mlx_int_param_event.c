@@ -1,12 +1,4 @@
-/*
-** mlx_int_param_event.c for MinilibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Mon Jul 31 16:37:50 2000 Charlie Root
-** Last update Wed Oct  6 13:14:52 2004 Olivier Crouzet
-*/
+
 
 #include	"mlx_int.h"
 
@@ -61,19 +53,19 @@ int	mlx_int_param_generic(t_xvar *xvar, XEvent *ev, t_win_list *win)
 
 int	(*(mlx_int_param_event[]))() =
 {
-  mlx_int_param_undef,   /* 0 */
+  mlx_int_param_undef,   
   mlx_int_param_undef,
   mlx_int_param_KeyPress,
-  mlx_int_param_KeyRelease,  /* 3 */
+  mlx_int_param_KeyRelease,  
   mlx_int_param_ButtonPress,
   mlx_int_param_ButtonRelease,
-  mlx_int_param_MotionNotify,  /* 6 */
+  mlx_int_param_MotionNotify,  
   mlx_int_param_generic,
   mlx_int_param_generic,
   mlx_int_param_generic,
   mlx_int_param_generic,
   mlx_int_param_generic,
-  mlx_int_param_Expose,   /* 12 */
+  mlx_int_param_Expose,   
   mlx_int_param_generic,
   mlx_int_param_generic,
   mlx_int_param_generic,
