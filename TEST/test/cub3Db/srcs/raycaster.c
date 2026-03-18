@@ -39,33 +39,90 @@ static int	get_wall_direction_from_hit(double hit_x, double hit_y)
 
 double	cast_ray(t_game *game, double angle, t_ray *ray)
 {
-	double	ray_x;
-	double	ray_y;
-	double	prev_x;
-	double	prev_y;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		hit_side;
 	double	distance;
-	double	step_x;
-	double	step_y;
 
-	ray_x = game->player.x;
-	ray_y = game->player.y;
-	prev_x = ray_x;
-	prev_y = ray_y;
-	step_x = cos(angle) * 0.01;
-	step_y = sin(angle) * 0.01;
-	distance = 0;
-	while (!is_wall(game, ray_x, ray_y) && distance < 100.0)
+	ray_dir_x = cos(angle);
+	ray_dir_y = sin(angle);
+	map_x = (int)game->player.x;
+	map_y = (int)game->player.y;
+	delta_dist_x = 1e30;
+	delta_dist_y = 1e30;
+	if (ray_dir_x != 0.0)
+		delta_dist_x = fabs(1.0 / ray_dir_x);
+	if (ray_dir_y != 0.0)
+		delta_dist_y = fabs(1.0 / ray_dir_y);
+	if (ray_dir_x < 0)
 	{
-		prev_x = ray_x;
-		prev_y = ray_y;
-		ray_x += step_x;
-		ray_y += step_y;
-		distance += 0.01;
+		step_x = -1;
+		side_dist_x = (game->player.x - map_x) * delta_dist_x;
 	}
-	ray->x = prev_x;
-	ray->y = prev_y;
+	else
+	{
+		step_x = 1;
+		side_dist_x = (map_x + 1.0 - game->player.x) * delta_dist_x;
+	}
+	if (ray_dir_y < 0)
+	{
+		step_y = -1;
+		side_dist_y = (game->player.y - map_y) * delta_dist_y;
+	}
+	else
+	{
+		step_y = 1;
+		side_dist_y = (map_y + 1.0 - game->player.y) * delta_dist_y;
+	}
+	hit_side = 0;
+	while (1)
+	{
+		if (side_dist_x < side_dist_y)
+		{
+			side_dist_x += delta_dist_x;
+			map_x += step_x;
+			hit_side = 0;
+		}
+		else
+		{
+			side_dist_y += delta_dist_y;
+			map_y += step_y;
+			hit_side = 1;
+		}
+		if (is_wall(game, map_x + 0.5, map_y + 0.5))
+			break ;
+	}
+	if (hit_side == 0)
+		distance = (map_x - game->player.x + (1 - step_x) / 2.0) / ray_dir_x;
+	else
+		distance = (map_y - game->player.y + (1 - step_y) / 2.0) / ray_dir_y;
+	if (distance < 0)
+		distance = -distance;
+	ray->x = game->player.x + distance * ray_dir_x;
+	ray->y = game->player.y + distance * ray_dir_y;
 	ray->angle = angle;
-	ray->wall_direction = get_wall_direction(game, ray->x, ray->y);
+	if (hit_side == 0)
+	{
+		if (step_x > 0)
+			ray->wall_direction = WALL_WEST;
+		else
+			ray->wall_direction = WALL_EAST;
+	}
+	else
+	{
+		if (step_y > 0)
+			ray->wall_direction = WALL_NORTH;
+		else
+			ray->wall_direction = WALL_SOUTH;
+	}
 	return (distance);
 }
 
@@ -82,15 +139,20 @@ void	raycaster(t_game *game)
 	t_ray	ray;
 	double	raw_distance;
 	double	fov_rad;
+	double	tan_half_fov;
+	double	camera_x;
+	double	ray_offset;
 
 	fov_rad = (game->player.fov * M_PI) / 180.0;
+	tan_half_fov = tan(fov_rad / 2.0);
 	x = 0;
 	while (x < game->width)
 	{
-		ray_angle = game->player.angle - (fov_rad / 2.0)
-			+ ((double)x / game->width) * fov_rad;
+		camera_x = (2.0 * (x + 0.5) / game->width) - 1.0;
+		ray_offset = atan(camera_x * tan_half_fov);
+		ray_angle = game->player.angle + ray_offset;
 		raw_distance = cast_ray(game, ray_angle, &ray);
-		ray.distance = raw_distance * cos(ray_angle - game->player.angle);
+		ray.distance = raw_distance * cos(ray_offset);
 		draw_wall_slice(game, x, &ray);
 		x++;
 	}
