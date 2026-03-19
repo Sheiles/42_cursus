@@ -1,0 +1,9 @@
+- using a folder as map gives leak
+- missing player gives leak
+- normal game leaks
+
+- Pay attention that there are no leaks if you use two textures at the same time, like: NE xx and new line NE xx
+
+
+
+valgrind -s --leak-check=full --show-leak-kinds=all ./cub3D "map"
