@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 #include "../includes/cub3d.h"
 
 static int	parse_line(char *line, t_game *game, t_parser_flags *flags)
@@ -92,10 +80,15 @@ int	parse_cub_file(char *filename, t_game *game)
 	if (parse_config(fd, game, &flags) == -1)
 	{
 		close(fd);
+		free_textures(game);
 		return (-1);
 	}
 	close(fd);
 	if (parse_map(filename, game, 0) == -1)
+	{
+		free_map_grid(game);
+		free_textures(game);
 		return (-1);
+	}
 	return (0);
 }

@@ -132,7 +132,8 @@ void	init_game(t_game *game);
 void	cleanup_game(t_game *game);
 int		is_wall(t_game *game, double x, double y);
 int		check_player_char(t_game *game, int x, int y);
-void	get_next_line_free(void);
+void	free_map_grid(t_game *game);
+void	free_textures(t_game *game);
 
 
 # define KEY_W 119

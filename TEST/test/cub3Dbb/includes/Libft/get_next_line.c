@@ -47,7 +47,11 @@ static char	*process_line(char **line)
 	if (newline)
 	{
 		*newline = '\0';
-		result = ft_strdup(*line);
+		if (*line && (*line)[0] != '\0')
+			result = ft_strdup(*line);
+		else
+			result = NULL;
+		// Move remaining part BEFORE freeing
 		ft_memmove(*line, newline + 1, ft_strlen(newline + 1) + 1);
 		if ((*line)[0] == '\0')
 		{
@@ -57,10 +61,15 @@ static char	*process_line(char **line)
 	}
 	else
 	{
-		result = *line;
+		if (*line && (*line)[0] != '\0')
+			result = *line;
+		else {
+			free(*line);
+			result = NULL;
+		}
 		*line = NULL;
 	}
-	return (result);
+	return result;
 }
 
 static char *gnl_static_line = NULL;

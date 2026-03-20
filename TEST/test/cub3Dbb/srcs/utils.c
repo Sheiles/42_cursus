@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 #include "../includes/cub3d.h"
 
 int	is_wall(t_game *game, double x, double y)
@@ -49,4 +37,28 @@ int	check_player_char(t_game *game, int x, int y)
 		return (1);
 	}
 	return (0);
+}
+
+void free_map_grid(t_game *game)
+{
+	if (!game->map.grid)
+		return;
+	for (int i = 0; i < game->map.height; i++)
+	{
+		free(game->map.grid[i]);
+	}
+	free(game->map.grid);
+	game->map.grid = NULL;
+}
+
+void free_textures(t_game *game)
+{
+	free(game->no_texture.path);
+	game->no_texture.path = NULL;
+	free(game->so_texture.path);
+	game->so_texture.path = NULL;
+	free(game->we_texture.path);
+	game->we_texture.path = NULL;
+	free(game->ea_texture.path);
+	game->ea_texture.path = NULL;
 }
