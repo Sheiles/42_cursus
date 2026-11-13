@@ -3,12 +3,14 @@
 #include "Intern.hpp"
 
 #include <iostream>
+#include <string>
 
-static int run_known_form(Intern &intern)
+static int run_known_form(Intern &intern, const std::string &form_name,
+	const std::string &target)
 {
 	AForm *form;
 
-	form = intern.makeForm("robotomy request", "Bender");
+	form = intern.makeForm(form_name, target);
 	if (form == NULL)
 	{
 		return (1);
@@ -34,13 +36,24 @@ static int run_known_form(Intern &intern)
 int main()
 {
 	Intern intern;
+	AForm *unknown_form;
 
-	if (run_known_form(intern) != 0)
+	if (run_known_form(intern, "shrubbery creation", "intern_test") != 0)
 	{
 		return (1);
 	}
-	if (intern.makeForm("unknown form", "target") != NULL)
+	if (run_known_form(intern, "robotomy request", "Bender") != 0)
 	{
+		return (1);
+	}
+	if (run_known_form(intern, "presidential pardon", "Arthur Dent") != 0)
+	{
+		return (1);
+	}
+	unknown_form = intern.makeForm("unknown form", "target");
+	if (unknown_form != NULL)
+	{
+		delete unknown_form;
 		return (1);
 	}
 	return (0);

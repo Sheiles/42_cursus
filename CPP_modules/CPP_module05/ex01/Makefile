@@ -7,6 +7,10 @@ OBJS    = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
+main.o: main.cpp Bureaucrat.hpp Form.hpp
+Bureaucrat.o: Bureaucrat.cpp Bureaucrat.hpp Form.hpp
+Form.o: Form.cpp Form.hpp Bureaucrat.hpp
+
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
