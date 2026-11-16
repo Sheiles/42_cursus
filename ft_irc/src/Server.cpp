@@ -1,3 +1,4 @@
+
 #include "Server.hpp"
 
 #include <algorithm>
@@ -201,6 +202,8 @@ void Server::run()
 			closeReadyClients();
 			continue;
 		}
+		if (descriptors[0].revents & (POLLERR | POLLHUP | POLLNVAL))
+			throw std::runtime_error("listening socket poll error");
 		if (descriptors[0].revents & POLLIN)
 			acceptClient();
 
@@ -356,6 +359,7 @@ void Server::processInput(Client &client)
 	while (!client.closing)
 	{
 		std::string::size_type newline = client.input.find('\n');
+
 		if (newline == std::string::npos)
 		{
 			std::size_t incompleteLength = client.input.size();
@@ -412,6 +416,7 @@ void Server::processLine(Client &client, const std::string &line)
 		return;
 	std::vector<std::string> params;
 	position = commandEnd == std::string::npos ? line.size() : commandEnd + 1;
+	bool trailingParameter = false;
 	while (position < line.size() && params.size() < 15)
 	{
 		while (position < line.size() && line[position] == ' ')
@@ -421,12 +426,23 @@ void Server::processLine(Client &client, const std::string &line)
 		if (line[position] == ':')
 		{
 			params.push_back(line.substr(position + 1));
+			trailingParameter = true;
 			break;
 		}
 		std::string::size_type end = line.find(' ', position);
 		params.push_back(line.substr(position,
 			end == std::string::npos ? std::string::npos : end - position));
 		position = end == std::string::npos ? line.size() : end + 1;
+	}
+	if (!trailingParameter && params.size() == 15)
+	{
+		while (position < line.size() && line[position] == ' ')
+			++position;
+		if (position < line.size())
+		{
+			numeric(client, 461, command + " :Too many parameters");
+			return;
+		}
 	}
 	processCommand(client, command, params);
 }
@@ -514,7 +530,18 @@ void Server::processCommand(Client &client, const std::string &command,
 			numeric(client, 461, "USER :Not enough parameters");
 			return;
 		}
-		if (params[0].empty() || params[0].size() > MAX_USERNAME_LENGTH)
+		bool validUsername = !params[0].empty()
+			&& params[0].size() <= MAX_USERNAME_LENGTH;
+		for (std::string::size_type i = 0;
+			 validUsername && i < params[0].size(); ++i)
+		{
+			unsigned char character =
+				static_cast<unsigned char>(params[0][i]);
+			if (character <= 32 || character == 127
+				|| params[0][i] == '@' || params[0][i] == '!')
+				validUsername = false;
+		}
+		if (!validUsername)
 		{
 			numeric(client, 461, "USER :Invalid username");
 			return;
@@ -609,28 +636,88 @@ void Server::processCommand(Client &client, const std::string &command,
 		}
 		return;
 	}
+
 	if (command == "NAMES")
 	{
 		if (params.empty())
 		{
+			bool foundChannel = false;
+			std::set<int> channelMembers;
+
 			for (std::map<std::string, Channel>::const_iterator channel =
 				 channels_.begin(); channel != channels_.end(); ++channel)
+			{
+				foundChannel = true;
+
+				for (std::map<int, bool>::const_iterator member =
+					 channel->second.members.begin();
+					 member != channel->second.members.end(); ++member)
+				{
+					channelMembers.insert(member->first);
+				}
+
 				sendNames(client, channel->second);
+			}
+
+			std::string names;
+			std::string namesPrefix = ":" + std::string(SERVER_NAME) + " 353 "
+				+ nicknameOrStar(client) + " * * :";
+			std::size_t available = MAX_LINE_LENGTH - namesPrefix.size();
+			bool foundUnchanneledUser = false;
+
+			for (std::map<int, Client>::const_iterator user = clients_.begin();
+				 user != clients_.end(); ++user)
+			{
+				if (!user->second.registered
+					|| channelMembers.find(user->first) != channelMembers.end())
+					continue;
+
+				std::string::size_type separator = names.empty() ? 0 : 1;
+
+				if (!names.empty()
+					&& names.size() + separator + user->second.nickname.size()
+						> available)
+				{
+					numeric(client, 353, "* * :" + names);
+					names.clear();
+					separator = 0;
+				}
+
+				if (user->second.nickname.size() + separator <= available)
+				{
+					if (separator != 0)
+						names += " ";
+
+					names += user->second.nickname;
+					foundUnchanneledUser = true;
+				}
+			}
+
+			if (!names.empty())
+				numeric(client, 353, "* * :" + names);
+
+			if (foundUnchanneledUser || !foundChannel)
+				numeric(client, 366, "* :End of /NAMES list");
 		}
 		else
 		{
 			std::vector<std::string> names = split(params[0], ',');
+
 			for (std::size_t i = 0; i < names.size(); ++i)
 			{
 				Channel *channel = findChannel(names[i]);
+
 				if (channel != NULL)
 					sendNames(client, *channel);
 				else
-					numeric(client, 366, names[i] + " :End of /NAMES list");
+					numeric(client, 366,
+						names[i] + " :End of /NAMES list");
 			}
 		}
+
 		return;
 	}
+
 	if (command == "TOPIC")
 	{
 		if (params.empty())
@@ -684,7 +771,7 @@ void Server::processCommand(Client &client, const std::string &command,
 			return;
 		}
 		Client *target = findNickname(params[0]);
-		if (target == NULL)
+		if (target == NULL || !target->registered)
 		{
 			numeric(client, 401, params[0] + " :No such nick");
 			return;
@@ -1201,7 +1288,10 @@ void Server::handleJoin(Client &client, const std::vector<std::string> &params)
 	for (std::size_t i = 0; i < names.size(); ++i)
 	{
 		if (names[i].empty())
+		{
+			numeric(client, 403, ":No such channel");
 			continue;
+		}
 		if (!validChannelName(names[i]))
 		{
 			numeric(client, 403, names[i] + " :No such channel");
@@ -1265,8 +1355,17 @@ void Server::handlePrivmsg(Client &client, const std::string &command,
 		return;
 	}
 	std::vector<std::string> targets = split(params[0], ',');
+	if (targets.empty())
+	{
+		if (!notice)
+			numeric(client, 411, ":No recipient given (PRIVMSG)");
+		return;
+	}
+	std::set<std::string> seenTargets;
 	for (std::size_t i = 0; i < targets.size(); ++i)
 	{
+		if (!seenTargets.insert(caseFold(targets[i])).second)
+			continue;
 		std::string prefix = clientPrefix(client) + " " + command + " "
 			+ targets[i] + " :";
 		if (prefix.size() >= MAX_LINE_LENGTH)
@@ -1288,18 +1387,13 @@ void Server::handlePrivmsg(Client &client, const std::string &command,
 					numeric(client, 403, targets[i] + " :No such channel");
 				continue;
 			}
-			if (!channel->hasMember(client.fd))
-			{
-				if (!notice)
-					numeric(client, 404, channel->name
-						+ " :Cannot send to channel");
-				continue;
-			}
+			// Without channel mode +n, IRC permits messages from non-members.
+			// This server does not implement +n, so do not block them.
 			sendToChannel(*channel, message, client.fd);
 			continue;
 		}
 		Client *recipient = findNickname(targets[i]);
-		if (recipient == NULL || recipient->closing)
+		if (recipient == NULL || !recipient->registered || recipient->closing)
 		{
 			if (!notice)
 				numeric(client, 401, targets[i] + " :No such nick");
@@ -1358,11 +1452,16 @@ void Server::handleMode(Client &client, const std::vector<std::string> &params)
 		+ channel->name + " " + params[1];
 	for (std::size_t i = 2; i < params.size(); ++i)
 		requestedModeLine += " " + params[i];
-	if (requestedModeLine.size() + 2 > MAX_LINE_LENGTH)
+	if (requestedModeLine.size() > MAX_LINE_LENGTH)
 	{
 		numeric(client, 696, channel->name + " :Mode line is too long");
 		return;
 	}
+	bool inviteOnly = channel->inviteOnly;
+	bool topicRestricted = channel->topicRestricted;
+	std::string channelKey = channel->key;
+	unsigned long userLimit = channel->userLimit;
+	std::map<int, bool> memberModes = channel->members;
 	const std::string &modeText = params[1];
 	bool adding = true;
 	std::size_t argument = 2;
@@ -1379,11 +1478,19 @@ void Server::handleMode(Client &client, const std::vector<std::string> &params)
 		}
 		bool valid = true;
 		bool invalidParameter = false;
+		bool changed = false;
 		std::string value;
+		std::string modeArgument;
 		if (mode == 'i')
-			channel->inviteOnly = adding;
+		{
+			changed = inviteOnly != adding;
+			inviteOnly = adding;
+		}
 		else if (mode == 't')
-			channel->topicRestricted = adding;
+		{
+			changed = topicRestricted != adding;
+			topicRestricted = adding;
+		}
 		else if (mode == 'k')
 		{
 			if (adding)
@@ -1406,7 +1513,7 @@ void Server::handleMode(Client &client, const std::vector<std::string> &params)
 							unsigned char character =
 								static_cast<unsigned char>(value[j]);
 							if (character <= 32 || character == 127
-								|| value[j] == ',')
+								|| value[j] == ',' || value[j] == ':')
 							{
 								validKey = false;
 								break;
@@ -1419,14 +1526,21 @@ void Server::handleMode(Client &client, const std::vector<std::string> &params)
 						}
 						else
 						{
-							channel->key = value;
-							modeArguments += " " + value;
+							changed = channelKey != value;
+							if (changed)
+							{
+								channelKey = value;
+								modeArgument = value;
+							}
 						}
 					}
 				}
 			}
-			else
-				channel->key.clear();
+			else if (!channelKey.empty())
+			{
+				channelKey.clear();
+				changed = true;
+			}
 		}
 		else if (mode == 'l')
 		{
@@ -1445,13 +1559,20 @@ void Server::handleMode(Client &client, const std::vector<std::string> &params)
 					}
 					else
 					{
-						channel->userLimit = limit;
-						modeArguments += " " + value;
+						changed = userLimit != limit;
+						if (changed)
+						{
+							userLimit = limit;
+							modeArgument = value;
+						}
 					}
 				}
 			}
-			else
-				channel->userLimit = 0;
+			else if (userLimit > 0)
+			{
+				userLimit = 0;
+				changed = true;
+			}
 		}
 		else if (mode == 'o')
 		{
@@ -1472,8 +1593,14 @@ void Server::handleMode(Client &client, const std::vector<std::string> &params)
 						+ " :They aren't on that channel");
 					continue;
 				}
-				channel->members[target->fd] = adding;
-				modeArguments += " " + value;
+				std::map<int, bool>::iterator member =
+					memberModes.find(target->fd);
+				if (member->second != adding)
+				{
+					member->second = adding;
+					modeArgument = value;
+					changed = true;
+				}
 			}
 		}
 		else
@@ -1496,23 +1623,51 @@ void Server::handleMode(Client &client, const std::vector<std::string> &params)
 				numeric(client, 461, "MODE :Not enough parameters");
 			continue;
 		}
+		if (!changed)
+			continue;
 		if (previousSign != (adding ? '+' : '-'))
 		{
 			appliedModes += adding ? "+" : "-";
 			previousSign = adding ? '+' : '-';
 		}
 		appliedModes += mode;
+		if (!modeArgument.empty())
+			modeArguments += " " + modeArgument;
 	}
 	if (!appliedModes.empty())
-		sendToChannel(*channel, clientPrefix(client) + " MODE "
-			+ channel->name + " " + appliedModes + modeArguments + "\r\n", -1);
+	{
+		std::string message = clientPrefix(client) + " MODE "
+			+ channel->name + " " + appliedModes + modeArguments + "\r\n";
+		if (message.size() > MAX_LINE_LENGTH + 2)
+		{
+			numeric(client, 696, channel->name + " :Mode line is too long");
+			return;
+		}
+		channel->inviteOnly = inviteOnly;
+		channel->topicRestricted = topicRestricted;
+		channel->key = channelKey;
+		channel->userLimit = userLimit;
+		channel->members.swap(memberModes);
+		sendToChannel(*channel, message, -1);
+	}
 }
 
 void Server::handleWho(Client &client, const std::vector<std::string> &params)
 {
-	if (params.empty())
+	if (params.empty() || params[0] == "*")
 	{
-		numeric(client, 315, "* :End of /WHO list");
+		for (std::map<int, Client>::const_iterator user = clients_.begin();
+			 user != clients_.end(); ++user)
+		{
+			if (!user->second.registered)
+				continue;
+			numeric(client, 352, "* " + user->second.username
+				+ " localhost ircserv.local " + user->second.nickname
+				+ (user->second.awayMessage.empty() ? " H" : " G")
+				+ " :0 " + user->second.realname);
+		}
+		std::string mask = params.empty() ? "*" : params[0];
+		numeric(client, 315, mask + " :End of /WHO list");
 		return;
 	}
 	Channel *channel = findChannel(params[0]);
@@ -1522,10 +1677,11 @@ void Server::handleWho(Client &client, const std::vector<std::string> &params)
 			 member != channel->members.end(); ++member)
 		{
 			std::map<int, Client>::const_iterator user = clients_.find(member->first);
-			if (user == clients_.end())
+			if (user == clients_.end() || !user->second.registered)
 				continue;
 			numeric(client, 352, channel->name + " " + user->second.username
-				+ " localhost ircserv.local " + user->second.nickname + " H"
+				+ " localhost ircserv.local " + user->second.nickname
+				+ (user->second.awayMessage.empty() ? " H" : " G")
 				+ (member->second ? "@" : "") + " :0 "
 				+ user->second.realname);
 		}
@@ -1533,10 +1689,11 @@ void Server::handleWho(Client &client, const std::vector<std::string> &params)
 	else
 	{
 		Client *user = findNickname(params[0]);
-		if (user != NULL)
+		if (user != NULL && user->registered)
 			numeric(client, 352, "* " + user->username
 				+ " localhost ircserv.local " + user->nickname
-				+ " H :0 " + user->realname);
+				+ (user->awayMessage.empty() ? " H :0 " : " G :0 ")
+				+ user->realname);
 	}
 	numeric(client, 315, params[0] + " :End of /WHO list");
 }
@@ -1548,46 +1705,57 @@ void Server::handleWhois(Client &client, const std::vector<std::string> &params)
 		numeric(client, 431, ":No nickname given");
 		return;
 	}
-	std::string nickname = params.size() > 1 ? params[1] : params[0];
-	Client *user = findNickname(nickname);
-	if (user == NULL)
+	std::string nicknameList = params.size() > 1 ? params[1] : params[0];
+	std::vector<std::string> nicknames = split(nicknameList, ',');
+	if (nicknames.empty())
 	{
-		numeric(client, 401, nickname + " :No such nick");
-		numeric(client, 318, nickname + " :End of /WHOIS list");
+		numeric(client, 431, ":No nickname given");
 		return;
 	}
-	numeric(client, 311, user->nickname + " " + user->username
-		+ " localhost * :" + user->realname);
-	std::string channelNames;
-	std::string namesPrefix = user->nickname + " :";
-	std::string numericPrefix = ":" + std::string(SERVER_NAME) + " 319 "
-		+ nicknameOrStar(client) + " ";
-	std::size_t available = MAX_LINE_LENGTH - numericPrefix.size()
-		- namesPrefix.size();
-	for (std::map<std::string, Channel>::const_iterator channel =
-		 channels_.begin(); channel != channels_.end(); ++channel)
+	for (std::size_t i = 0; i < nicknames.size(); ++i)
 	{
-		if (!channel->second.hasMember(user->fd))
+		Client *user = findNickname(nicknames[i]);
+		if (user == NULL || !user->registered)
+		{
+			numeric(client, 401, nicknames[i] + " :No such nick");
+			numeric(client, 318, nicknames[i] + " :End of /WHOIS list");
 			continue;
-		std::string item = (channel->second.isOperator(user->fd) ? "@" : "")
-			+ channel->first;
-		std::size_t separator = channelNames.empty() ? 0 : 1;
-		if (!channelNames.empty()
-			&& channelNames.size() + separator + item.size() > available)
+		}
+		numeric(client, 311, user->nickname + " " + user->username
+			+ " localhost * :" + user->realname);
+		if (!user->awayMessage.empty())
+			numeric(client, 301, user->nickname + " :" + user->awayMessage);
+		std::string channelNames;
+		std::string namesPrefix = user->nickname + " :";
+		std::string numericPrefix = ":" + std::string(SERVER_NAME) + " 319 "
+			+ nicknameOrStar(client) + " ";
+		std::size_t available = MAX_LINE_LENGTH - numericPrefix.size()
+			- namesPrefix.size();
+		for (std::map<std::string, Channel>::const_iterator channel =
+			 channels_.begin(); channel != channels_.end(); ++channel)
 		{
+			if (!channel->second.hasMember(user->fd))
+				continue;
+			std::string item = (channel->second.isOperator(user->fd) ? "@" : "")
+				+ channel->second.name;
+			std::size_t separator = channelNames.empty() ? 0 : 1;
+			if (!channelNames.empty()
+				&& channelNames.size() + separator + item.size() > available)
+			{
+				numeric(client, 319, namesPrefix + channelNames);
+				channelNames.clear();
+				separator = 0;
+			}
+			if (item.size() + separator <= available)
+			{
+				if (separator != 0)
+					channelNames += " ";
+				channelNames += item;
+			}
+		}
+		if (!channelNames.empty())
 			numeric(client, 319, namesPrefix + channelNames);
-			channelNames.clear();
-			separator = 0;
-		}
-		if (item.size() + separator <= available)
-		{
-			if (separator != 0)
-				channelNames += " ";
-			channelNames += item;
-		}
+		numeric(client, 312, user->nickname + " ircserv.local :ft_irc server");
+		numeric(client, 318, user->nickname + " :End of /WHOIS list");
 	}
-	if (!channelNames.empty())
-		numeric(client, 319, namesPrefix + channelNames);
-	numeric(client, 312, user->nickname + " ircserv.local :ft_irc server");
-	numeric(client, 318, user->nickname + " :End of /WHOIS list");
 }

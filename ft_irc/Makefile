@@ -1,20 +1,17 @@
+
 NAME = ircserv
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-CPPFLAGS = -Iinclude
-SRC = src/main.cpp src/Server.cpp
-OBJ = $(SRC:.cpp=.o)
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -Iinclude
+SRCS = src/main.cpp src/Server.cpp
+OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
-
-src/%.o: src/%.cpp include/Server.hpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
