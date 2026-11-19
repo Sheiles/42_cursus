@@ -1,5 +1,6 @@
 services:
   nginx:
+    container_name: nginx
     image: nginx
     build:
       context: ./requirements/nginx
@@ -17,6 +18,7 @@ services:
       - inception
 
   wordpress:
+    container_name: wordpress
     image: wordpress
     build:
       context: ./requirements/wordpress
@@ -43,13 +45,14 @@ services:
     networks:
       - inception
     healthcheck:
-      test: ["CMD", "wp", "--allow-root", "core", "is-installed", "--path=/var/www/html"]
+      test: ["CMD-SHELL", "[ -f /run/php/php8.2-fpm.pid ] && kill -0 \"$$(cat /run/php/php8.2-fpm.pid)\" && wp --allow-root core is-installed --path=/var/www/html"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
       start_period: 30s
 
   mariadb:
+    container_name: mariadb
     image: mariadb
     build:
       context: ./requirements/mariadb
@@ -65,7 +68,7 @@ services:
     networks:
       - inception
     healthcheck:
-      test: ["CMD-SHELL", "mariadb-admin ping --protocol=socket --silent"]
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$(tr -d '\\r\\n' < /run/secrets/db_password)\" mariadb-admin ping --protocol=tcp -h 127.0.0.1 -u \"$$MYSQL_USER\" --silent"]
       interval: 5s
       timeout: 3s
       retries: 20

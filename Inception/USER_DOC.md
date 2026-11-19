@@ -8,7 +8,7 @@
 - **MariaDB** stores WordPress data.
 
 The database and site files persist in named volumes backed by
-`/home/sheiles/data/mariadb` and `/home/sheiles/data/wordpress`.
+`/home/alanty/data/mariadb` and `/home/alanty/data/wordpress`.
 
 ## Start and stop
 
@@ -26,8 +26,8 @@ make down
 
 ## Access the site
 
-Open `https://sheiles.42.fr/` for the website or
-`https://sheiles.42.fr/wp-admin/` for the administration panel. The local
+Open `https://alanty.42.fr/` for the website or
+`https://alanty.42.fr/wp-admin/` for the administration panel. The local
 certificate is self-signed, so the browser may ask you to accept it.
 
 The configured administrator account is `site_owner`; the second account is

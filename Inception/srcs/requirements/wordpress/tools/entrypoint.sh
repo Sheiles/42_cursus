@@ -6,7 +6,7 @@ read_secret() {
         echo "Required secret is not readable: $1" >&2
         exit 1
     fi
-    cat "$1"
+    tr -d '\r\n' < "$1"
 }
 
 db_password=$(read_secret /run/secrets/db_password)
@@ -17,12 +17,6 @@ if [ -z "$db_password" ] || [ -z "$owner_password" ] || [ -z "$editor_password" 
     echo "Passwords must not be empty." >&2
     exit 1
 fi
-case "$db_password$owner_password$editor_password" in
-    *[!A-Za-z0-9_-]*)
-        echo "Passwords must contain only letters, digits, _ or -." >&2
-        exit 1
-        ;;
-esac
 
 if [ -z "${DOMAIN_NAME:-}" ] || [ -z "${MYSQL_DATABASE:-}" ] \
     || [ -z "${MYSQL_USER:-}" ] || [ -z "${MYSQL_HOST:-}" ] \
@@ -39,7 +33,29 @@ case "$WP_ADMIN_USER" in
         ;;
 esac
 
+mkdir -p /run/php /var/www/html
+chown -R www-data:www-data /run/php
+
+if [ ! -f /var/www/html/wp-settings.php ]; then
+    cp -a /usr/src/wordpress/. /var/www/html/
+fi
+
 cd /var/www/html
+
+i=0
+until php -r '
+    mysqli_report(MYSQLI_REPORT_OFF);
+    $m = @new mysqli(getenv("MYSQL_HOST"), getenv("MYSQL_USER"), $argv[1], getenv("MYSQL_DATABASE"));
+    exit($m->connect_errno ? 1 : 0);
+' "$db_password" >/dev/null 2>&1; do
+    i=$((i + 1))
+    if [ "$i" -ge 30 ]; then
+        echo "Timed out waiting for MariaDB at $MYSQL_HOST." >&2
+        exit 1
+    fi
+    sleep 1
+done
+
 if [ ! -f wp-config.php ]; then
     wp --allow-root config create \
         --path=/var/www/html \
@@ -51,7 +67,7 @@ if [ ! -f wp-config.php ]; then
         --skip-check
 fi
 
-wp --allow-root core is-installed --path=/var/www/html >/dev/null 2>&1 || \
+if ! wp --allow-root core is-installed --path=/var/www/html >/dev/null 2>&1; then
     wp --allow-root core install \
         --path=/var/www/html \
         --url="https://$DOMAIN_NAME" \
@@ -60,6 +76,7 @@ wp --allow-root core is-installed --path=/var/www/html >/dev/null 2>&1 || \
         --admin_password="$owner_password" \
         --admin_email="$WP_ADMIN_EMAIL" \
         --skip-email
+fi
 
 if ! wp --allow-root user get "$WP_AUTHOR_USER" --field=ID --path=/var/www/html >/dev/null 2>&1; then
     wp --allow-root user create "$WP_AUTHOR_USER" "$WP_AUTHOR_EMAIL" \
@@ -69,4 +86,5 @@ if ! wp --allow-root user get "$WP_AUTHOR_USER" --field=ID --path=/var/www/html 
 fi
 
 chown -R www-data:www-data /var/www/html
+chmod 640 /var/www/html/wp-config.php
 exec php-fpm8.2 --nodaemonize

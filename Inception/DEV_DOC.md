@@ -4,7 +4,7 @@
 
 Use a Linux virtual machine with Docker Engine, the Docker Compose plugin,
 GNU Make, and OpenSSL. Clone or copy this project to the VM and ensure
-`sheiles.42.fr` resolves to the VM's local IP address. For a local-only setup,
+`alanty.42.fr` resolves to the VM's local IP address. For a local-only setup,
 add the mapping to `/etc/hosts` on the VM and on the client used to browse the
 site.
 
@@ -35,7 +35,7 @@ their files later does not rotate existing WordPress accounts.
 make
 ```
 
-The Makefile creates the host directories under `/home/sheiles/data`, then
+The Makefile creates the host directories under `/home/alanty/data`, then
 builds the NGINX, WordPress/PHP-FPM, and MariaDB images from their own
 Dockerfiles and starts the Compose project. Only NGINX publishes a port, 443.
 The Compose network is private to the project.
@@ -62,8 +62,8 @@ docker compose --project-name inception --env-file srcs/.env \
 
 `make down` stops and removes the containers and network but preserves named
 volumes and their data. Back up the data directories and secrets before
-maintenance. Removing or replacing `/home/sheiles/data/mariadb` or
-`/home/sheiles/data/wordpress` can cause permanent data loss.
+maintenance. Removing or replacing `/home/alanty/data/mariadb` or
+`/home/alanty/data/wordpress` can cause permanent data loss.
 
 ## Persistence and project layout
 
@@ -76,8 +76,8 @@ maintenance. Removing or replacing `/home/sheiles/data/mariadb` or
 - `srcs/requirements/mariadb/` contains the database image, server
   configuration, and initialization script.
 - `secrets/` contains local password files and must not be committed.
-- The database volume is stored at `/home/sheiles/data/mariadb`; the WordPress
-  files volume is stored at `/home/sheiles/data/wordpress`.
+- The database volume is stored at `/home/alanty/data/mariadb`; the WordPress
+  files volume is stored at `/home/alanty/data/wordpress`.
 
 Compose volumes use the local driver with bind options to map the named
 volumes to those host paths. NGINX mounts WordPress files read-only.
