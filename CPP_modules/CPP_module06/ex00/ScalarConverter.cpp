@@ -86,6 +86,10 @@ namespace
 
 	LiteralType detectType(const std::string &text)
 	{
+		if (text.size() == 1
+			&& std::isprint(static_cast<unsigned char>(text[0]))
+			&& !std::isdigit(static_cast<unsigned char>(text[0])))
+			return (CHAR_LITERAL);
 		if (text.size() == 3 && text[0] == '\'' && text[2] == '\''
 			&& std::isprint(static_cast<unsigned char>(text[1])))
 			return (CHAR_LITERAL);
@@ -181,7 +185,7 @@ namespace
 		if (value != value)
 			std::cout << "nanf" << std::endl;
 		else if (value > std::numeric_limits<double>::max())
-			std::cout << "inff" << std::endl;
+			std::cout << "+inff" << std::endl;
 		else if (value < -std::numeric_limits<double>::max())
 			std::cout << "-inff" << std::endl;
 		else if (value > std::numeric_limits<float>::max()
@@ -200,7 +204,7 @@ namespace
 		if (value != value)
 			std::cout << "nan" << std::endl;
 		else if (value > std::numeric_limits<double>::max())
-			std::cout << "inf" << std::endl;
+			std::cout << "+inf" << std::endl;
 		else if (value < -std::numeric_limits<double>::max())
 			std::cout << "-inf" << std::endl;
 		else
@@ -225,7 +229,7 @@ void ScalarConverter::convert(const std::string &literal)
 	character = '\0';
 	if (type == CHAR_LITERAL)
 	{
-		character = literal[1];
+		character = (literal.size() == 1) ? literal[0] : literal[1];
 		value = static_cast<double>(character);
 	}
 	else if (type == SPECIAL_LITERAL)
