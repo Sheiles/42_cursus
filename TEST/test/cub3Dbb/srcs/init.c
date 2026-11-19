@@ -96,13 +96,14 @@ void	cleanup_game(t_game *game)
 
 	if (game->map.grid)
 	{
-		i = 0;
-		while (i < game->map.height)
-		{
-			free(game->map.grid[i]);
-			i++;
-		}
-		free(game->map.grid);
+   		i = 0;
+    	while (i < game->map.height)
+    	{
+        	if (game->map.grid[i])
+            	free(game->map.grid[i]);
+        	i++;
+    	}
+    	free(game->map.grid);
 	}
 	cleanup_textures(game);
 	cleanup_mlx(game);

@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 #include "../includes/cub3d.h"
 
 static int	init_mlx(t_game *game)
@@ -55,6 +43,7 @@ int	main(int argc, char **argv)
 	if (parse_cub_file(argv[1], &game) == -1)
 	{
 		printf("Error\nFailed to parse map file\n");
+		cleanup_game(&game);
 		exit(EXIT_FAILURE);
 	}
 	init_mlx(&game);

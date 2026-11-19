@@ -7,9 +7,9 @@ INCLUDES	= -I./includes -I./includes/Libft -I./mlx
 SRCS_DIR	= srcs
 OBJS_DIR	= objs
 
-SRCS		= main.c init.c parser.c color_parser.c texture_parser.c \
-			  map_parser.c raycaster.c render.c events.c utils.c \
-			  ../includes/Libft/get_next_line.c
+SRCS = main.c init.c parser.c color_parser.c texture_parser.c \
+       map_parser.c map_validator.c map_validator2.c \
+       raycaster.c render.c render2.c events.c utils.c
 
 OBJS		= $(SRCS:%.c=$(OBJS_DIR)/%.o)
 
@@ -31,7 +31,6 @@ ifeq ($(findstring CYGWIN,$(UNAME_S)),CYGWIN)
 	MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 endif
 
-
 GREEN		= \033[0;32m
 BLUE		= \033[0;34m
 RED			= \033[0;31m
@@ -41,31 +40,31 @@ RESET		= \033[0m
 all: $(LIBFT) $(MLX) $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(GREEN)ðŸ”— Linking $(NAME)...$(RESET)"
+	@echo "$(GREEN)Linking $(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft $(MLX_FLAGS) -o $(NAME)
-	@echo "$(GREEN)âœ… Build complete!$(RESET)"
+	@echo "$(GREEN)Build complete!$(RESET)"
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
-	@echo "$(BLUE)ðŸ”¨ Compiling $<...$(RESET)"
+	@echo "$(BLUE)Compiling $<...$(RESET)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	@echo "$(YELLOW)ðŸ“š Building libft...$(RESET)"
+	@echo "$(YELLOW)Building libft...$(RESET)"
 	@make -C $(LIBFT_DIR)
 
 $(MLX):
-	@echo "$(YELLOW)ðŸŽ¨ Building MLX...$(RESET)"
+	@echo "$(YELLOW)Building MLX...$(RESET)"
 	@make -C $(MLX_DIR)
 
 clean:
-	@echo "$(RED)ðŸ§¹ Cleaning object files...$(RESET)"
+	@echo "$(RED)Cleaning object files...$(RESET)"
 	@rm -rf $(OBJS_DIR)
 	@make -C $(LIBFT_DIR) clean
 	@make -C $(MLX_DIR) clean
 
 fclean: clean
-	@echo "$(RED)ðŸ—‘ï¸  Removing executables...$(RESET)"
+	@echo "$(RED)Removing executables...$(RESET)"
 	@rm -f $(NAME)
 	@make -C $(LIBFT_DIR) fclean
 
@@ -75,15 +74,15 @@ debug: CFLAGS += -g3 -fsanitize=address
 debug: re
 
 norm:
-	@echo "$(BLUE)ðŸ“‹ Checking norminette (excluding MLX)...$(RESET)"
+	@echo "$(BLUE)Checking norminette...$(RESET)"
 	@norminette $(SRCS_DIR) includes/*.h $(LIBFT_DIR) || true
 
 norm_strict:
-	@echo "$(BLUE)ðŸ“‹ Strict norminette check...$(RESET)"
+	@echo "$(BLUE)Strict norminette check...$(RESET)"
 	@norminette $(SRCS_DIR) includes/*.h $(LIBFT_DIR)
 
 run: all
-	@echo "$(GREEN)ðŸš€ Running $(NAME)...$(RESET)"
+	@echo "$(GREEN)Running $(NAME)...$(RESET)"
 	@./$(NAME) maps/test.cub
 
 .PHONY: all clean fclean re debug norm norm_strict run

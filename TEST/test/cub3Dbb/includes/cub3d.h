@@ -97,7 +97,6 @@ typedef struct s_game
 	int			height;
 }	t_game;
 
-
 int		parse_cub_file(char *filename, t_game *game);
 int		parse_no_texture(char *line, t_game *game);
 int		parse_so_texture(char *line, t_game *game);
@@ -107,12 +106,11 @@ int		parse_floor_color(char *line, t_game *game);
 int		parse_ceiling_color(char *line, t_game *game);
 int		parse_map(char *filename, t_game *game, int start_line);
 int		validate_map(t_game *game);
-
+void	free_visited(char **visited, int height);
 
 void	raycaster(t_game *game);
 double	cast_ray(t_game *game, double angle, t_ray *ray);
 int		get_wall_direction(t_game *game, double hit_x, double hit_y);
-
 
 int		render_frame(void *param);
 void	draw_wall_slice(t_game *game, int x, t_ray *ray);
@@ -120,21 +118,18 @@ void	put_pixel(t_game *game, int x, int y, int color);
 int		get_color_from_texture(t_texture *tex, int x, int y);
 int		load_textures(t_game *game);
 
-
 int		key_press(int key, t_game *game);
 int		key_release(int key, t_game *game);
 int		mouse_move(int x, int y, t_game *game);
 int		close_window(t_game *game);
-
 
 void	error_exit(char *message);
 void	init_game(t_game *game);
 void	cleanup_game(t_game *game);
 int		is_wall(t_game *game, double x, double y);
 int		check_player_char(t_game *game, int x, int y);
-void	free_map_grid(t_game *game);
-void	free_textures(t_game *game);
-
+t_texture	*get_wall_texture(t_game *game, int wall_dir);
+int			get_tex_x(t_texture *tex, t_ray *ray);
 
 # define KEY_W 119
 # define KEY_A 97

@@ -1,6 +1,6 @@
-# cub3D - My first RayCaster with miniLibX
+*This project has been created as part of the 42 curriculum by `sheiles`.*
 
-*This project has been created as part of the 42 curriculum by `sam`.*
+# cub3D - My first RayCaster with miniLibX
 
 ## Description
 

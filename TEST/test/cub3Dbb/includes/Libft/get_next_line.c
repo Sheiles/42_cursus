@@ -47,11 +47,7 @@ static char	*process_line(char **line)
 	if (newline)
 	{
 		*newline = '\0';
-		if (*line && (*line)[0] != '\0')
-			result = ft_strdup(*line);
-		else
-			result = NULL;
-		// Move remaining part BEFORE freeing
+		result = ft_strdup(*line);
 		ft_memmove(*line, newline + 1, ft_strlen(newline + 1) + 1);
 		if ((*line)[0] == '\0')
 		{
@@ -61,47 +57,36 @@ static char	*process_line(char **line)
 	}
 	else
 	{
-		if (*line && (*line)[0] != '\0')
-			result = *line;
-		else {
-			free(*line);
-			result = NULL;
-		}
+		result = *line;
 		*line = NULL;
 	}
-	return result;
+	return (result);
 }
-
-static char *gnl_static_line = NULL;
 
 char	*get_next_line(int fd)
 {
+	static char	*line = NULL;
 	char		*buffer;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
-	if (gnl_static_line == NULL)
 	{
-		gnl_static_line = ft_read_line(fd, buffer, NULL);
-		free(buffer);
-		if (gnl_static_line == NULL || gnl_static_line[0] == '\0')
+		free(line);
+		line = NULL;
+		return (NULL);
+	}
+	if (line == NULL)
+	{
+		buffer = malloc(BUFFER_SIZE + 1);
+		if (!buffer)
+			return (NULL);
+		line = ft_read_line(fd, buffer, NULL);
+		free(buffer);                          // always freed here, once
+		if (line == NULL || line[0] == '\0')
 		{
-			free(gnl_static_line);
-			gnl_static_line = NULL;
+			free(line);
+			line = NULL;
 			return (NULL);
 		}
 	}
-	return (process_line(&gnl_static_line));
-}
-
-void get_next_line_free(void)
-{
-	if (gnl_static_line)
-	{
-		free(gnl_static_line);
-		gnl_static_line = NULL;
-	}
+	return (process_line(&line));
 }
