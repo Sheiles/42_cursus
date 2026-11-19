@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by alanty.*
+*This project has been created as part of the 42 curriculum by sheiles.*
 
 # Inception
 
@@ -9,7 +9,7 @@ website inside a Docker Compose infrastructure. It runs three purpose-built
 containers: NGINX provides the HTTPS entry point, WordPress runs PHP-FPM, and
 MariaDB stores the site database. A private Docker bridge network connects the
 services. Named volumes persist the database and website files under
-`/home/alanty/data` on the host.
+`/home/sheiles/data` on the host.
 
 The images are built from the Debian 12 slim base image; no ready-made service
 images are used. Configuration and service build files are in `srcs/`, while
@@ -39,7 +39,7 @@ local-only credentials are stored in the ignored `secrets/` directory.
 
 Run this project on a Linux virtual machine with Docker Engine, the Docker
 Compose plugin, and GNU Make installed. Ensure the VM can resolve
-`alanty.42.fr` to its own IP address (for local testing, add the mapping to
+`sheiles.42.fr` to its own IP address (for local testing, add the mapping to
 the VM's `/etc/hosts` and to the client machine's hosts file).
 
 Create four local secret files before starting:
@@ -55,7 +55,7 @@ openssl rand -hex 32 > secrets/wp_editor_password.txt
 
 Keep the generated values private; these files are excluded from Git. Then
 build and start the project with `make`. Visit
-`https://alanty.42.fr/` for the site or `https://alanty.42.fr/wp-admin/` for
+`https://sheiles.42.fr/` for the site or `https://sheiles.42.fr/wp-admin/` for
 the administration panel. The generated TLS certificate is self-signed, so a
 browser warning is expected in a local setup.
 

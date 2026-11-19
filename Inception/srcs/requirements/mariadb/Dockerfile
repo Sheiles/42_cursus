@@ -1,4 +1,4 @@
-FROM debian:12-slim
+curl -kI https://sheiles.42.fr/FROM debian:12-slim
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mariadb-server \
